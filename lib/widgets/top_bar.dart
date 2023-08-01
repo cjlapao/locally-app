@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:bitsdojo_window/bitsdojo_window.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:locally/styles/colors.dart';
@@ -17,10 +20,10 @@ final closeButtonColors = WindowButtonColors(
     iconMouseOver: Colors.white);
 
 class TopBar extends StatefulWidget {
-  final bool? showIcon;
+  final bool? showLogo;
   final Color? color;
 
-  const TopBar({Key? key, this.showIcon, this.color}) : super(key: key);
+  const TopBar({Key? key, this.showLogo, this.color}) : super(key: key);
 
   @override
   State<TopBar> createState() => _TopBarState();
@@ -34,6 +37,17 @@ class _TopBarState extends State<TopBar> {
     });
   }
 
+  double getLogoLeftMargin() {
+    if (kIsWeb) {
+      return 18;
+    }
+    if (Platform.isMacOS) {
+      return 75;
+    } else {
+      return 18;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
@@ -41,13 +55,13 @@ class _TopBarState extends State<TopBar> {
         height: _height,
         color: widget.color ?? LocallyColors.lightGrey,
       ),
-      if (widget.showIcon ?? true)
+      if (widget.showLogo ?? true)
         SizedBox(
             height: _height,
             child:
                 Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
               Padding(
-                  padding: const EdgeInsets.only(left: 18, top: 5),
+                  padding: EdgeInsets.only(left: getLogoLeftMargin(), top: 5),
                   child: SvgPicture.asset(
                     'assets/images/logo.svg',
                     height: 18,

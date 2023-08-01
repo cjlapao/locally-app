@@ -33,7 +33,8 @@ class _WelcomeWizardHomePageState extends State<WelcomeWizardHomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const TopBar(
-                showIcon: false,
+                showLogo: true,
+                color: LocallyColors.mediumGrey,
               ),
               Expanded(
                 child: Column(

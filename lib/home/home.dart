@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
           body: Column(
         children: [
           TopBar(
-            showIcon: true,
+            showLogo: true,
           ),
           Row(
             children: [

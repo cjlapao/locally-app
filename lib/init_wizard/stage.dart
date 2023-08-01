@@ -54,7 +54,8 @@ class _WelcomeWizardStagePageState extends State<WelcomeWizardStagePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const TopBar(
-                showIcon: false,
+                showLogo: false,
+                color: LocallyColors.mediumGrey,
               ),
               Expanded(
                   child: Center(
