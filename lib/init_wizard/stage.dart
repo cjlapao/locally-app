@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:locally/init_wizard/stages/location_stage.dart';
 import 'package:locally/init_wizard/stages/name_stage.dart';
 import 'package:locally/init_wizard/welcome.dart';
 import 'package:locally/styles/colors.dart';
@@ -14,6 +15,8 @@ const stages = [
   "Review",
 ];
 
+List<String?> _data = List.filled(stages.length, '');
+
 class WelcomeWizardStagePage extends StatefulWidget {
   const WelcomeWizardStagePage({super.key});
 
@@ -25,6 +28,18 @@ class _WelcomeWizardStagePageState extends State<WelcomeWizardStagePage> {
   final _loading = false;
   final double modalWidth = 1030;
   final double modalHeight = 650;
+  final _controller = PageController(initialPage: 0);
+  final nameController = TextEditingController();
+  final environmentLocationController = TextEditingController();
+  final environmentLocationPathController = TextEditingController();
+  final environmentLocationUserController = TextEditingController();
+  final environmentLocationPasswordController = TextEditingController();
+
+  final _formKeys = [
+    GlobalKey<FormState>(),
+    GlobalKey<FormState>(),
+    GlobalKey<FormState>()
+  ];
 
   @override
   void initState() {
@@ -41,6 +56,27 @@ class _WelcomeWizardStagePageState extends State<WelcomeWizardStagePage> {
     return stages.indexOf(stage);
   }
 
+  Future<void> onNextPage() async {
+    if (!_formKeys[_controller.page!.toInt()].currentState!.validate()) {
+      return;
+    }
+    final state = _formKeys[_controller.page!.toInt()].currentState!;
+    state.save();
+    setState(() {
+      stagesChangeNotifier.stage = stages[_controller.page!.toInt() + 1];
+    });
+    await _controller.nextPage(
+        duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
+  }
+
+  Future<void> onPreviousPage() async {
+    setState(() {
+      stagesChangeNotifier.stage = stages[_controller.page!.toInt() - 1];
+    });
+    await _controller.previousPage(
+        duration: const Duration(milliseconds: 500), curve: Curves.ease);
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(builder: (context, snapshot) {
@@ -48,14 +84,14 @@ class _WelcomeWizardStagePageState extends State<WelcomeWizardStagePage> {
           body: Stack(children: [
         Container(
             height: MediaQuery.of(context).size.height / 2,
-            color: LocallyColors.mediumGrey),
+            color: LocallyLightColors.darkerBackground),
         Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const TopBar(
                 showLogo: false,
-                color: LocallyColors.mediumGrey,
+                color: LocallyLightColors.darkerBackground,
               ),
               Expanded(
                   child: Center(
@@ -82,15 +118,38 @@ class _WelcomeWizardStagePageState extends State<WelcomeWizardStagePage> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                      if (stagesChangeNotifier.currentStage ==
-                                          stages[0])
-                                        const WelcomeWizardStageNamePage(),
+                                      Expanded(
+                                          child: PageView(
+                                        controller: _controller,
+                                        children: [
+                                          WelcomeWizardStageNamePage(
+                                            stageName: "Name",
+                                            nameController: nameController,
+                                            formKey: _formKeys[0],
+                                            onSave: (name) {
+                                              _data[0] = name;
+                                            },
+                                          ),
+                                          WelcomeWizardStageLocationPage(
+                                            formKey: _formKeys[1],
+                                            stageName: "Location",
+                                            environmentLocationController:
+                                                environmentLocationController,
+                                            environmentLocationPathController:
+                                                environmentLocationPathController,
+                                            environmentLocationUserController:
+                                                environmentLocationUserController,
+                                            environmentLocationPasswordController:
+                                                environmentLocationPasswordController,
+                                          ),
+                                        ],
+                                      )),
                                       Padding(
                                           padding: const EdgeInsets.only(
                                               top: 20,
                                               left: 10,
                                               right: 10,
-                                              bottom: 20),
+                                              bottom: 40),
                                           child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.start,
@@ -112,14 +171,8 @@ class _WelcomeWizardStagePageState extends State<WelcomeWizardStagePage> {
                                                               stages[stages
                                                                       .length -
                                                                   1]
-                                                          ? () {
-                                                              setState(() {
-                                                                stagesChangeNotifier
-                                                                        .stage =
-                                                                    stages[getStageIndex(
-                                                                            stagesChangeNotifier.currentStage) +
-                                                                        1];
-                                                              });
+                                                          ? () async {
+                                                              await onNextPage();
                                                             }
                                                           : null,
                                                       child:
@@ -138,13 +191,8 @@ class _WelcomeWizardStagePageState extends State<WelcomeWizardStagePage> {
                                                           stagesChangeNotifier
                                                                       .currentStage !=
                                                                   stages[0]
-                                                              ? () {
-                                                                  setState(() {
-                                                                    stagesChangeNotifier
-                                                                            .stage =
-                                                                        stages[getStageIndex(stagesChangeNotifier.currentStage) -
-                                                                            1];
-                                                                  });
+                                                              ? () async {
+                                                                  await onPreviousPage();
                                                                 }
                                                               : null,
                                                       child:
@@ -163,12 +211,12 @@ class _WelcomeWizardStagePageState extends State<WelcomeWizardStagePage> {
                                                         Navigator
                                                             .pushNamedAndRemoveUntil(
                                                                 context,
-                                                                "/",
+                                                                "/wizard/welcome",
                                                                 (route) =>
                                                                     false);
                                                       },
-                                                      child:
-                                                          const Text("Cancel")))
+                                                      child: const Text(
+                                                          "Cancel"))),
                                             ],
                                           ))
                                     ]))

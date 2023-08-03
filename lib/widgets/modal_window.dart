@@ -26,17 +26,18 @@ class _ModalWindowState extends State<ModalWindow> {
     return Stack(children: [
       if (widget.isLoading)
         Container(
-          color: LocallyColors.white,
+          color: LocallyLightColors.white,
           child: const LoadingScreen(),
         ),
       if (!widget.isLoading)
         Card(
-          shadowColor: LocallyColors.black,
+          shadowColor: LocallyLightColors.black,
           elevation: 6,
-          surfaceTintColor: LocallyColors.primary,
-          color: LocallyColors.lightGrey,
+          surfaceTintColor: LocallyLightColors.primary,
+          color: LocallyLightColors.defaultBackground,
           shape: RoundedRectangleBorder(
-              side: const BorderSide(color: LocallyColors.grey, width: 0.3),
+              side: const BorderSide(
+                  color: LocallyLightColors.darkerBackground, width: 0.3),
               borderRadius: BorderRadius.circular(10)),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -50,7 +51,7 @@ class _ModalWindowState extends State<ModalWindow> {
                       topLeft: Radius.circular(10),
                       topRight: Radius.circular(10),
                     ),
-                    color: LocallyColors.mediumGrey,
+                    color: LocallyLightColors.darkerBackground,
                   ),
                   width: MediaQuery.of(context).size.width,
                   height: 88,
@@ -74,7 +75,7 @@ class _ModalWindowState extends State<ModalWindow> {
                   child: Container(
                       width: MediaQuery.of(context).size.width,
                       decoration: const BoxDecoration(
-                        color: LocallyColors.lightGrey,
+                        color: LocallyLightColors.defaultBackground,
                         borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(10),
                           bottomRight: Radius.circular(10),

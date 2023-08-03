@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:locally/styles/text.dart';
 
-class LocallyTextFormField extends StatefulWidget {
+class LocallyTextFormField extends StatelessWidget {
   final String? name;
   final String? helperText;
   final double? width;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
+  final Function(String?)? onSaved;
 
   const LocallyTextFormField(
       {Key? key,
@@ -14,37 +15,35 @@ class LocallyTextFormField extends StatefulWidget {
       this.helperText,
       this.controller,
       this.validator,
+      this.onSaved,
       this.width})
       : super(key: key);
 
   @override
-  State<LocallyTextFormField> createState() => _LocallyTextFormFieldState();
-}
-
-class _LocallyTextFormFieldState extends State<LocallyTextFormField> {
-  @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      if (widget.name != null)
+      if (name != null)
         Padding(
             padding: const EdgeInsets.only(bottom: 10),
-            child: Text(widget.name!, style: normalTextStyle())),
-      if (widget.width != null)
+            child: Text(name!, style: normalTextStyle())),
+      if (width != null)
         SizedBox(
-            width: widget.width,
+            width: width,
             child: TextFormField(
-              controller: widget.controller,
-              validator: widget.validator,
+              controller: controller,
+              validator: validator,
+              onSaved: onSaved,
             )),
-      if (widget.width == null)
+      if (width == null)
         TextFormField(
-          controller: widget.controller,
-          validator: widget.validator,
+          controller: controller,
+          validator: validator,
+          onSaved: onSaved,
         ),
-      if (widget.helperText != null)
+      if (helperText != null)
         Padding(
             padding: const EdgeInsets.only(top: 10),
-            child: Text(widget.helperText!, style: smallTextStyle())),
+            child: Text(helperText!, style: smallTextStyle())),
     ]);
   }
 }

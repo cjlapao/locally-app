@@ -37,9 +37,10 @@ class LocallyApp extends StatelessWidget {
       title: 'Locally',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: LocallyColors.primary),
+        colorScheme:
+            ColorScheme.fromSeed(seedColor: LocallyLightColors.primary),
         buttonTheme: const ButtonThemeData(
-          buttonColor: LocallyColors.primary,
+          buttonColor: LocallyLightColors.primary,
           textTheme: ButtonTextTheme.primary,
         ),
         elevatedButtonTheme: elevatedButtonTheme(),

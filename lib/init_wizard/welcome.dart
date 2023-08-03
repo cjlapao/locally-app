@@ -17,9 +17,6 @@ class WelcomeWizardHomePage extends StatefulWidget {
 }
 
 class _WelcomeWizardHomePageState extends State<WelcomeWizardHomePage> {
-  final _initialLoading = false;
-  final _loading = false;
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(builder: (context, snapshot) {
@@ -27,14 +24,14 @@ class _WelcomeWizardHomePageState extends State<WelcomeWizardHomePage> {
           body: Stack(children: [
         Container(
             height: MediaQuery.of(context).size.height / 2,
-            color: LocallyColors.mediumGrey),
+            color: LocallyLightColors.darkerBackground),
         Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const TopBar(
-                showLogo: true,
-                color: LocallyColors.mediumGrey,
+                showLogo: false,
+                color: LocallyLightColors.darkerBackground,
               ),
               Expanded(
                 child: Column(
@@ -42,8 +39,7 @@ class _WelcomeWizardHomePageState extends State<WelcomeWizardHomePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                        padding: EdgeInsets.only(
-                            left: MediaQuery.of(context).size.width * .25),
+                        padding: const EdgeInsets.only(left: 303),
                         child: SizedBox(
                             height: MediaQuery.of(context).size.height / 2 -
                                 LocallySizeConstants.topBarHeight,
@@ -51,25 +47,30 @@ class _WelcomeWizardHomePageState extends State<WelcomeWizardHomePage> {
                               mainAxisAlignment: MainAxisAlignment.end,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SvgPicture.asset(
-                                  'assets/images/logo.svg',
-                                  width: 214,
-                                ),
-                                Text(
-                                  'Local development simplified',
-                                  style: h2TextStyle(),
-                                ),
+                                Padding(
+                                    padding:
+                                        const EdgeInsets.only(bottom: 15.5),
+                                    child: SvgPicture.asset(
+                                      'assets/images/logo.svg',
+                                      width: 214,
+                                    )),
+                                Padding(
+                                    padding: const EdgeInsets.only(bottom: 30),
+                                    child: Text(
+                                      'Local development simplified',
+                                      style: h2TextStyle(),
+                                    )),
                                 Padding(
                                   padding:
-                                      const EdgeInsets.only(top: 20, bottom: 5),
+                                      const EdgeInsets.only(top: 20, bottom: 6),
                                   child: Text(
                                     'github.com/locally',
                                     style: normalTextStyle(
-                                        color: LocallyColors.primary),
+                                        color: LocallyLightColors.primary),
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(bottom: 20),
+                                  padding: const EdgeInsets.only(bottom: 31),
                                   child: Text(
                                     '2023.08.01.2112-main',
                                     style: smallTextStyle(),
@@ -78,11 +79,10 @@ class _WelcomeWizardHomePageState extends State<WelcomeWizardHomePage> {
                               ],
                             ))),
                     Padding(
-                        padding: EdgeInsets.only(
-                            left: MediaQuery.of(context).size.width * .25),
+                        padding: const EdgeInsets.only(left: 303),
                         child: Column(children: [
                           Padding(
-                              padding: const EdgeInsets.only(top: 50),
+                              padding: const EdgeInsets.only(top: 38),
                               child: ElevatedButton(
                                 onPressed: () {
                                   Navigator.pushNamed(context, '/wizard/name');
@@ -90,7 +90,7 @@ class _WelcomeWizardHomePageState extends State<WelcomeWizardHomePage> {
                                 child: const Text('Create New Environment'),
                               )),
                           Padding(
-                              padding: const EdgeInsets.only(top: 20),
+                              padding: const EdgeInsets.only(top: 17),
                               child: OutlinedButton(
                                   onPressed: () {
                                     Navigator.pushNamedAndRemoveUntil(

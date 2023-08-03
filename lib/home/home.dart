@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
               ),
               Container(
                 width: 6,
-                color: LocallyColors.lightGrey,
+                color: LocallyLightColors.darkerBackground,
               ),
               Expanded(
                   child: Center(
@@ -46,7 +46,8 @@ class _HomePageState extends State<HomePage> {
                       padding: const EdgeInsets.only(top: 10),
                       child: Text(
                         'github.com/locally',
-                        style: normalTextStyle(color: LocallyColors.primary),
+                        style:
+                            normalTextStyle(color: LocallyLightColors.primary),
                       ),
                     ),
                     Padding(

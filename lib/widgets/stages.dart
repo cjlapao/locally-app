@@ -6,6 +6,7 @@ import 'package:locally/styles/text.dart';
 class StagesChangeNotifier extends ChangeNotifier {
   String _currentStage = "";
   String _previousStage = "";
+  double _position = 0;
   bool _loading = false;
 
   String get currentStage {
@@ -24,6 +25,13 @@ class StagesChangeNotifier extends ChangeNotifier {
 
   set loading(bool value) {
     _loading = value;
+    notifyListeners();
+  }
+
+  double get position => _position;
+
+  set position(double value) {
+    _position = value;
     notifyListeners();
   }
 
@@ -100,7 +108,7 @@ class _StagesState extends State<Stages> {
                                 child: Container(
                                   width: 2,
                                   height: 30,
-                                  color: LocallyColors.darkGrey,
+                                  color: LocallyLightColors.darkerBorder,
                                 )),
                           if (index != 0)
                             Positioned(
@@ -109,7 +117,7 @@ class _StagesState extends State<Stages> {
                                 child: Container(
                                   width: 2,
                                   height: 60,
-                                  color: LocallyColors.darkGrey,
+                                  color: LocallyLightColors.darkerBorder,
                                 )),
                           Padding(
                               padding:
@@ -123,8 +131,8 @@ class _StagesState extends State<Stages> {
                                       decoration: BoxDecoration(
                                           color: widget.stages![index] ==
                                                   currentStage
-                                              ? LocallyColors.primary
-                                              : LocallyColors.darkGrey,
+                                              ? LocallyLightColors.primary
+                                              : LocallyLightColors.darkerBorder,
                                           borderRadius:
                                               BorderRadius.circular(50)),
                                     ),

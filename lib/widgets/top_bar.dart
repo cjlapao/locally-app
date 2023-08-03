@@ -53,7 +53,7 @@ class _TopBarState extends State<TopBar> {
     return Stack(children: [
       Container(
         height: _height,
-        color: widget.color ?? LocallyColors.lightGrey,
+        color: widget.color ?? LocallyLightColors.darkerBackground,
       ),
       if (widget.showLogo ?? true)
         SizedBox(

@@ -40,7 +40,7 @@ class LoadingScreen extends StatelessWidget {
                   width: messageWidth,
                   height: messageHeight,
                   child: const CircularProgressIndicator(
-                    color: LocallyColors.primary,
+                    color: LocallyLightColors.primary,
                   )))
       ],
     );
