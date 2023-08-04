@@ -7,7 +7,7 @@ class StagesChangeNotifier extends ChangeNotifier {
   String _currentStage = "";
   String _previousStage = "";
   double _position = 0;
-  bool _loading = false;
+  bool _reload = false;
 
   String get currentStage {
     return _currentStage;
@@ -23,9 +23,12 @@ class StagesChangeNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  set loading(bool value) {
-    _loading = value;
-    notifyListeners();
+  set needsReload(bool value) {
+    _reload = value;
+    if (value) {
+      notifyListeners();
+    }
+    _reload = false;
   }
 
   double get position => _position;
@@ -35,7 +38,7 @@ class StagesChangeNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool get loading => _loading;
+  bool get reload => _reload;
 }
 
 class Stages extends StatefulWidget {
@@ -129,8 +132,9 @@ class _StagesState extends State<Stages> {
                                       width: 18,
                                       height: 18,
                                       decoration: BoxDecoration(
-                                          color: widget.stages![index] ==
-                                                  currentStage
+                                          color: index <=
+                                                  widget.stages!
+                                                      .indexOf(currentStage!)
                                               ? LocallyLightColors.primary
                                               : LocallyLightColors.darkerBorder,
                                           borderRadius:

@@ -10,29 +10,30 @@ InputDecorationTheme inputTheme() {
       vertical: 12.0,
       horizontal: 10.0,
     ),
+    constraints: const BoxConstraints(maxHeight: 38),
     errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(7.0),
         borderSide: const BorderSide(
             color: LocallyLightColors.inputBorderError,
             style: BorderStyle.solid,
-            width: 1.0)),
+            width: 2.0)),
     disabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(7.0),
         borderSide: const BorderSide(
             color: LocallyLightColors.inputBorderDisabled,
             style: BorderStyle.solid,
-            width: 1.0)),
+            width: 2.0)),
     enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(7.0),
         borderSide: const BorderSide(
             color: LocallyLightColors.inputBorder,
             style: BorderStyle.solid,
-            width: 1.0)),
+            width: 2.0)),
     focusedBorder: const OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(7.0)),
         borderSide: BorderSide(
             color: LocallyLightColors.inputBorderFocused,
-            width: 1,
+            width: 2,
             style: BorderStyle.solid)),
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(7.0),

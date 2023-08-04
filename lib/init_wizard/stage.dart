@@ -34,11 +34,13 @@ class _WelcomeWizardStagePageState extends State<WelcomeWizardStagePage> {
   final environmentLocationPathController = TextEditingController();
   final environmentLocationUserController = TextEditingController();
   final environmentLocationPasswordController = TextEditingController();
+  final environmentLocationValidationController = TextEditingController();
 
   final _formKeys = [
     GlobalKey<FormState>(),
     GlobalKey<FormState>(),
-    GlobalKey<FormState>()
+    GlobalKey<FormState>(),
+    GlobalKey<FormState>(),
   ];
 
   @override
@@ -77,6 +79,48 @@ class _WelcomeWizardStagePageState extends State<WelcomeWizardStagePage> {
         duration: const Duration(milliseconds: 500), curve: Curves.ease);
   }
 
+  bool isNextEnabled() {
+    // Position Validation
+    if (stagesChangeNotifier.currentStage == stages[stages.length - 1]) {
+      return false;
+    }
+
+    // Stage 0 validation
+    if (stagesChangeNotifier.currentStage == stages[0]) {
+      if (nameController.text.isEmpty) {
+        return false;
+      }
+    }
+    // Stage 1 validation
+    if (stagesChangeNotifier.currentStage == stages[1]) {
+      if (environmentLocationController.text.isEmpty) {
+        return false;
+      }
+      switch (environmentLocationController.text) {
+        case "locally":
+          if (environmentLocationPathController.text.isEmpty) {
+            return false;
+          }
+          break;
+        case "s3":
+          if (environmentLocationUserController.text.isEmpty ||
+              environmentLocationPasswordController.text.isEmpty ||
+              environmentLocationValidationController.text.isEmpty) {
+            return false;
+          }
+          break;
+        case "azure":
+          if (environmentLocationUserController.text.isEmpty ||
+              environmentLocationPasswordController.text.isEmpty ||
+              environmentLocationValidationController.text.isEmpty) {
+            return false;
+          }
+          break;
+      }
+    }
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(builder: (context, snapshot) {
@@ -105,7 +149,7 @@ class _WelcomeWizardStagePageState extends State<WelcomeWizardStagePage> {
                                   "Flow the steps to create new environment",
                               child: Row(children: [
                                 Stages(
-                                  width: modalHeight * .30,
+                                  width: 280,
                                   currentStage:
                                       stagesChangeNotifier.currentStage,
                                   stagesChangeNotifier: stagesChangeNotifier,
@@ -141,6 +185,21 @@ class _WelcomeWizardStagePageState extends State<WelcomeWizardStagePage> {
                                                 environmentLocationUserController,
                                             environmentLocationPasswordController:
                                                 environmentLocationPasswordController,
+                                            environmentLocationValidationController:
+                                                environmentLocationValidationController,
+                                            onSave: (f) {
+                                              print("save");
+                                            },
+                                          ),
+                                          Container(
+                                            child: Form(
+                                                key: _formKeys[2],
+                                                child: const Text("Domains")),
+                                          ),
+                                          Container(
+                                            child: Form(
+                                                key: _formKeys[2],
+                                                child: const Text("Domains")),
                                           ),
                                         ],
                                       )),
@@ -166,11 +225,7 @@ class _WelcomeWizardStagePageState extends State<WelcomeWizardStagePage> {
                                                               MaterialStatePropertyAll(
                                                                   Size(105,
                                                                       38))),
-                                                      onPressed: stagesChangeNotifier
-                                                                  .currentStage !=
-                                                              stages[stages
-                                                                      .length -
-                                                                  1]
+                                                      onPressed: isNextEnabled()
                                                           ? () async {
                                                               await onNextPage();
                                                             }

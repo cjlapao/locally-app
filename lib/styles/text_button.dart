@@ -40,9 +40,16 @@ TextButtonThemeData textButtonTheme() {
           }),
           padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
               const EdgeInsets.symmetric(vertical: 15, horizontal: 15)),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
+          shape: MaterialStateProperty.resolveWith<RoundedRectangleBorder>(
+              (states) {
+            if (states.contains(MaterialState.disabled)) {
+              return RoundedRectangleBorder(
+                side: const BorderSide(width: 2),
+                borderRadius: BorderRadius.circular(7.0),
+              );
+            }
+            return RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(7.0),
-            ),
-          )));
+            );
+          })));
 }

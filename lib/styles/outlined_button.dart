@@ -27,11 +27,12 @@ OutlinedButtonThemeData outlinedButtonTheme() {
           side: MaterialStateProperty.resolveWith<BorderSide>((states) {
             if (states.contains(MaterialState.disabled)) {
               return const BorderSide(
+                  width: 2,
                   color: LocallyLightColors
                       .secondaryButtonDisabledBorder); // Disabled color
             }
             return const BorderSide(
-                color: LocallyLightColors.secondaryButtonBorder);
+                width: 2, color: LocallyLightColors.secondaryButtonBorder);
           }),
           textStyle: MaterialStateProperty.resolveWith<TextStyle>((states) {
             if (states.contains(MaterialState.disabled)) {
@@ -48,6 +49,7 @@ OutlinedButtonThemeData outlinedButtonTheme() {
           }),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
+              side: const BorderSide(width: 2),
               borderRadius: BorderRadius.circular(7.0),
             ),
           )));

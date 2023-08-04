@@ -8,6 +8,9 @@ class LocallyTextFormField extends StatelessWidget {
   final TextEditingController? controller;
   final String? Function(String?)? validator;
   final Function(String?)? onSaved;
+  final Function(String?)? onChanged;
+  final Function(PointerDownEvent)? onTapOutside;
+  final AutovalidateMode? autovalidateMode;
 
   const LocallyTextFormField(
       {Key? key,
@@ -16,7 +19,10 @@ class LocallyTextFormField extends StatelessWidget {
       this.controller,
       this.validator,
       this.onSaved,
-      this.width})
+      this.onChanged,
+      this.onTapOutside,
+      this.width,
+      this.autovalidateMode})
       : super(key: key);
 
   @override
@@ -28,22 +34,29 @@ class LocallyTextFormField extends StatelessWidget {
             child: Text(name!, style: normalTextStyle())),
       if (width != null)
         SizedBox(
+            height: 38,
             width: width,
             child: TextFormField(
+              autovalidateMode: autovalidateMode,
               controller: controller,
               validator: validator,
+              onChanged: onChanged,
+              onTapOutside: onTapOutside,
               onSaved: onSaved,
             )),
       if (width == null)
         TextFormField(
+          autovalidateMode: autovalidateMode,
           controller: controller,
           validator: validator,
+          onChanged: onChanged,
+          onTapOutside: onTapOutside,
           onSaved: onSaved,
         ),
       if (helperText != null)
         Padding(
             padding: const EdgeInsets.only(top: 10),
-            child: Text(helperText!, style: smallTextStyle())),
+            child: Text(helperText!, style: captionTextStyle())),
     ]);
   }
 }
