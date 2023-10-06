@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:locally/init_wizard/stages/domains_stage.dart';
 import 'package:locally/init_wizard/stages/location_stage.dart';
 import 'package:locally/init_wizard/stages/name_stage.dart';
+import 'package:locally/init_wizard/stages/review_stage.dart';
 import 'package:locally/init_wizard/welcome.dart';
+import 'package:locally/services/environment_service.dart';
 import 'package:locally/styles/colors.dart';
 import 'package:locally/widgets/stages.dart';
 import 'package:locally/widgets/top_bar.dart';
 
+import '../models/environment.dart';
 import '../widgets/modal_window.dart';
 
 const stages = [
@@ -14,8 +18,6 @@ const stages = [
   "Domains",
   "Review",
 ];
-
-List<String?> _data = List.filled(stages.length, '');
 
 class WelcomeWizardStagePage extends StatefulWidget {
   const WelcomeWizardStagePage({super.key});
@@ -27,7 +29,7 @@ class WelcomeWizardStagePage extends StatefulWidget {
 class _WelcomeWizardStagePageState extends State<WelcomeWizardStagePage> {
   final _loading = false;
   final double modalWidth = 1030;
-  final double modalHeight = 650;
+  final double modalHeight = 655;
   final _controller = PageController(initialPage: 0);
   final nameController = TextEditingController();
   final environmentLocationController = TextEditingController();
@@ -35,6 +37,8 @@ class _WelcomeWizardStagePageState extends State<WelcomeWizardStagePage> {
   final environmentLocationUserController = TextEditingController();
   final environmentLocationPasswordController = TextEditingController();
   final environmentLocationValidationController = TextEditingController();
+  final domainsDomainController = TextEditingController();
+  final domainsSubdomainController = TextEditingController();
 
   final _formKeys = [
     GlobalKey<FormState>(),
@@ -42,14 +46,28 @@ class _WelcomeWizardStagePageState extends State<WelcomeWizardStagePage> {
     GlobalKey<FormState>(),
     GlobalKey<FormState>(),
   ];
+  double currentIndex = -1;
 
   @override
   void initState() {
     super.initState();
     stagesChangeNotifier.stage = stages[0];
+    stagesChangeNotifier.data = EnvironmentRequest();
     stagesChangeNotifier.addListener(() {
       if (mounted) {
-        setState(() {});
+        setState(() {
+          currentIndex =
+              getStageIndex(stagesChangeNotifier.currentStage).toDouble();
+          print(
+              "got change request ${stagesChangeNotifier.currentStage} with ${stagesChangeNotifier.previousStage}");
+          if (getStageIndex(stagesChangeNotifier.currentStage) !=
+              _controller.page!.toInt()) {
+            print(
+                "jumping to page ${getStageIndex(stagesChangeNotifier.currentStage)}");
+            _controller
+                .jumpToPage(getStageIndex(stagesChangeNotifier.currentStage));
+          }
+        });
       }
     });
   }
@@ -64,26 +82,29 @@ class _WelcomeWizardStagePageState extends State<WelcomeWizardStagePage> {
     }
     final state = _formKeys[_controller.page!.toInt()].currentState!;
     state.save();
-    setState(() {
-      stagesChangeNotifier.stage = stages[_controller.page!.toInt() + 1];
-    });
+    print("next page is ${_controller.page!.toInt() + 1}");
     await _controller.nextPage(
         duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
+    setState(() {
+      print(
+          "Setting the notifier to change to ${stages[_controller.page!.toInt()]}");
+      stagesChangeNotifier.stage = stages[_controller.page!.toInt()];
+    });
   }
 
   Future<void> onPreviousPage() async {
-    setState(() {
-      stagesChangeNotifier.stage = stages[_controller.page!.toInt() - 1];
-    });
     await _controller.previousPage(
         duration: const Duration(milliseconds: 500), curve: Curves.ease);
+    setState(() {
+      stagesChangeNotifier.stage = stages[_controller.page!.toInt()];
+    });
   }
 
   bool isNextEnabled() {
-    // Position Validation
-    if (stagesChangeNotifier.currentStage == stages[stages.length - 1]) {
-      return false;
-    }
+    // // Position Validation
+    // if (stagesChangeNotifier.currentStage == stages[stages.length - 1]) {
+    //   return false;
+    // }
 
     // Stage 0 validation
     if (stagesChangeNotifier.currentStage == stages[0]) {
@@ -93,9 +114,6 @@ class _WelcomeWizardStagePageState extends State<WelcomeWizardStagePage> {
     }
     // Stage 1 validation
     if (stagesChangeNotifier.currentStage == stages[1]) {
-      if (environmentLocationController.text.isEmpty) {
-        return false;
-      }
       switch (environmentLocationController.text) {
         case "locally":
           if (environmentLocationPathController.text.isEmpty) {
@@ -116,7 +134,23 @@ class _WelcomeWizardStagePageState extends State<WelcomeWizardStagePage> {
             return false;
           }
           break;
+        default:
+          return false;
       }
+    }
+    // Stage 2 validation
+    if (stagesChangeNotifier.currentStage == stages[2]) {
+      if (domainsDomainController.text.isEmpty) {
+        return false;
+      }
+      if (domainsSubdomainController.text.isEmpty) {
+        return false;
+      }
+      return true;
+    }
+    // Stage 3 validation
+    if (stagesChangeNotifier.currentStage == stages[3]) {
+      return true;
     }
     return true;
   }
@@ -171,7 +205,9 @@ class _WelcomeWizardStagePageState extends State<WelcomeWizardStagePage> {
                                             nameController: nameController,
                                             formKey: _formKeys[0],
                                             onSave: (name) {
-                                              _data[0] = name;
+                                              print("save name: $name");
+                                              stagesChangeNotifier.data?.name =
+                                                  name;
                                             },
                                           ),
                                           WelcomeWizardStageLocationPage(
@@ -188,19 +224,44 @@ class _WelcomeWizardStagePageState extends State<WelcomeWizardStagePage> {
                                             environmentLocationValidationController:
                                                 environmentLocationValidationController,
                                             onSave: (f) {
-                                              print("save");
+                                              stagesChangeNotifier
+                                                      .data?.locationType =
+                                                  environmentLocationController
+                                                      .text;
+                                              stagesChangeNotifier
+                                                      .data?.location =
+                                                  environmentLocationPathController
+                                                      .text;
+                                              stagesChangeNotifier
+                                                      .data?.remoteUser =
+                                                  environmentLocationUserController
+                                                      .text;
+                                              stagesChangeNotifier
+                                                      .data?.remoteSecret =
+                                                  environmentLocationPasswordController
+                                                      .text;
                                             },
                                           ),
-                                          Container(
-                                            child: Form(
-                                                key: _formKeys[2],
-                                                child: const Text("Domains")),
+                                          WelcomeWizardStageDomainsPage(
+                                            formKey: _formKeys[2],
+                                            stageName: "Domains",
+                                            domainController:
+                                                domainsDomainController,
+                                            subdomainController:
+                                                domainsSubdomainController,
+                                            onSave: (p0) {
+                                              stagesChangeNotifier
+                                                      .data?.domain =
+                                                  domainsDomainController.text;
+                                              stagesChangeNotifier
+                                                      .data?.subDomain =
+                                                  domainsSubdomainController
+                                                      .text;
+                                            },
                                           ),
-                                          Container(
-                                            child: Form(
-                                                key: _formKeys[2],
-                                                child: const Text("Domains")),
-                                          ),
+                                          WelcomeWizardStageReviewPage(
+                                              formKey: _formKeys[3],
+                                              stageName: "Review")
                                         ],
                                       )),
                                       Padding(
@@ -215,23 +276,44 @@ class _WelcomeWizardStagePageState extends State<WelcomeWizardStagePage> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          right: 10),
-                                                  child: ElevatedButton(
-                                                      style: const ButtonStyle(
-                                                          fixedSize:
-                                                              MaterialStatePropertyAll(
-                                                                  Size(105,
-                                                                      38))),
-                                                      onPressed: isNextEnabled()
-                                                          ? () async {
-                                                              await onNextPage();
-                                                            }
-                                                          : null,
-                                                      child:
-                                                          const Text("Next"))),
+                                              if (currentIndex <
+                                                  stages.length - 1)
+                                                Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            right: 10),
+                                                    child: ElevatedButton(
+                                                        style: const ButtonStyle(
+                                                            fixedSize:
+                                                                MaterialStatePropertyAll(
+                                                                    Size(105,
+                                                                        38))),
+                                                        onPressed:
+                                                            isNextEnabled()
+                                                                ? () async {
+                                                                    await onNextPage();
+                                                                  }
+                                                                : null,
+                                                        child: const Text(
+                                                            "Next"))),
+                                              if (currentIndex ==
+                                                  stages.length - 1)
+                                                Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            right: 10),
+                                                    child: ElevatedButton(
+                                                        style: const ButtonStyle(
+                                                            fixedSize:
+                                                                MaterialStatePropertyAll(
+                                                                    Size(105,
+                                                                        38))),
+                                                        onPressed:
+                                                            isNextEnabled()
+                                                                ? () async {}
+                                                                : null,
+                                                        child: const Text(
+                                                            "Create"))),
                                               Padding(
                                                   padding:
                                                       const EdgeInsets.only(

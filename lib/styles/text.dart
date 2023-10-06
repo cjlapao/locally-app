@@ -46,6 +46,15 @@ TextStyle captionTextStyle(
       fontSize: fontSize ?? 14);
 }
 
+TextStyle inputErrorTextStyle(
+    {Color? color, FontWeight? fontWeight, double? fontSize}) {
+  return TextStyle(
+      fontFamily: 'Inter',
+      color: color ?? LocallyLightColors.errorText,
+      fontWeight: fontWeight ?? FontWeight.w400,
+      fontSize: fontSize ?? 14);
+}
+
 TextStyle normalTextStyle(
     {Color? color, FontWeight? fontWeight, double? fontSize}) {
   return TextStyle(

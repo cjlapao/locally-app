@@ -41,6 +41,7 @@ OutlinedButtonThemeData outlinedButtonTheme() {
             }
             return secondaryButtonTextStyle();
           }),
+          alignment: Alignment.centerLeft,
           foregroundColor: MaterialStateProperty.resolveWith((states) {
             if (states.contains(MaterialState.disabled)) {
               return LocallyLightColors.secondaryButtonDisabledText;

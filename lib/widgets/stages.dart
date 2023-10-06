@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:locally/styles/colors.dart';
 import 'package:locally/styles/text.dart';
 
-class StagesChangeNotifier extends ChangeNotifier {
+class StagesChangeNotifier<T> extends ChangeNotifier {
   String _currentStage = "";
   String _previousStage = "";
   double _position = 0;
   bool _reload = false;
+  T? _data;
 
   String get currentStage {
     return _currentStage;
@@ -39,6 +40,13 @@ class StagesChangeNotifier extends ChangeNotifier {
   }
 
   bool get reload => _reload;
+
+  T? get data => _data;
+
+  set data(T? value) {
+    _data = value;
+    notifyListeners();
+  }
 }
 
 class Stages extends StatefulWidget {
@@ -62,22 +70,30 @@ class Stages extends StatefulWidget {
 class _StagesState extends State<Stages> {
   GlobalKey itemColumn = GlobalKey();
   String? currentStage = "";
-
-  String test() {
-    return "test";
-  }
+  List<String> visitedStages = [];
 
   @override
   void initState() {
     super.initState();
     currentStage = widget.currentStage ?? "";
+    if (currentStage!.isNotEmpty) {
+      addToVisitedStages(currentStage!);
+    }
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (widget.stagesChangeNotifier != null) {
         widget.stagesChangeNotifier!.addListener(() {
           currentStage = widget.stagesChangeNotifier!.currentStage;
+          final previousStage = widget.stagesChangeNotifier!.previousStage;
+          addToVisitedStages(previousStage);
         });
       }
     });
+  }
+
+  void addToVisitedStages(String stage) {
+    if (!visitedStages.contains(stage)) {
+      visitedStages.add(stage);
+    }
   }
 
   @override
@@ -96,13 +112,13 @@ class _StagesState extends State<Stages> {
                       index < (widget.stages?.length ?? 0);
                       index++)
                     GestureDetector(
-                        onTap: () => {
-                              if (widget.stagesChangeNotifier != null)
-                                {
-                                  widget.stagesChangeNotifier!.stage =
-                                      widget.stages![index]
-                                }
-                            },
+                        onTap: () {
+                          if (widget.stagesChangeNotifier != null &&
+                              visitedStages.contains(widget.stages![index])) {
+                            widget.stagesChangeNotifier!.stage =
+                                widget.stages![index];
+                          }
+                        },
                         child: Stack(children: [
                           if (index == 0)
                             Positioned(
@@ -132,9 +148,11 @@ class _StagesState extends State<Stages> {
                                       width: 18,
                                       height: 18,
                                       decoration: BoxDecoration(
-                                          color: index <=
-                                                  widget.stages!
-                                                      .indexOf(currentStage!)
+                                          color: (index <=
+                                                      widget.stages!.indexOf(
+                                                          currentStage!) ||
+                                                  visitedStages.contains(
+                                                      widget.stages![index]))
                                               ? LocallyLightColors.primary
                                               : LocallyLightColors.darkerBorder,
                                           borderRadius:

@@ -31,6 +31,7 @@ ElevatedButtonThemeData elevatedButtonTheme() {
             }
             return primaryButtonTextStyle();
           }),
+          alignment: Alignment.centerLeft,
           elevation: MaterialStateProperty.all<double>(0),
           foregroundColor:
               MaterialStateProperty.all<Color>(LocallyLightColors.white),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:locally/models/environment.dart';
 import 'package:locally/styles/colors.dart';
 import 'package:locally/styles/text.dart';
 import 'package:locally/widgets/top_bar.dart';
@@ -7,7 +8,8 @@ import 'package:locally/widgets/top_bar.dart';
 import '../common/constants.dart';
 import '../widgets/stages.dart';
 
-StagesChangeNotifier stagesChangeNotifier = StagesChangeNotifier();
+StagesChangeNotifier<EnvironmentRequest> stagesChangeNotifier =
+    StagesChangeNotifier();
 
 class WelcomeWizardHomePage extends StatefulWidget {
   const WelcomeWizardHomePage({super.key});

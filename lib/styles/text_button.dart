@@ -38,6 +38,7 @@ TextButtonThemeData textButtonTheme() {
             }
             return textButtonTextStyle();
           }),
+          alignment: Alignment.centerLeft,
           padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
               const EdgeInsets.symmetric(vertical: 15, horizontal: 15)),
           shape: MaterialStateProperty.resolveWith<RoundedRectangleBorder>(

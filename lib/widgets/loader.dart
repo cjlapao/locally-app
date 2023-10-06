@@ -9,8 +9,15 @@ class LoadingScreen extends StatelessWidget {
   final double opacity = 200; //100
   final double? height;
   final double? width;
+  final Color? loaderColor;
+  final bool? blurBackground;
 
-  const LoadingScreen({super.key, this.height, this.width});
+  const LoadingScreen(
+      {super.key,
+      this.height,
+      this.width,
+      this.loaderColor,
+      this.blurBackground});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +30,7 @@ class LoadingScreen extends StatelessWidget {
 
     return Stack(
       children: [
-        if (isVisible)
+        if (isVisible && (blurBackground ?? true))
           ClipRect(
               child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur),
@@ -39,8 +46,8 @@ class LoadingScreen extends StatelessWidget {
                   alignment: Alignment.center,
                   width: messageWidth,
                   height: messageHeight,
-                  child: const CircularProgressIndicator(
-                    color: LocallyLightColors.primary,
+                  child: CircularProgressIndicator(
+                    color: loaderColor ?? LocallyLightColors.primary,
                   )))
       ],
     );

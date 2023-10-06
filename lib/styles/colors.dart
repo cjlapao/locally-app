@@ -8,6 +8,7 @@ class LocallyLightColors {
   static const Color darkerBackground = Color(0xFFF1F1F1);
   static const Color darkerBorder = Color(0xFFD9D9D9);
   static const Color primary = Color(0xff467894);
+  static const Color gridLineColor = Color(0xffD9D9D9);
 
   static const Color primaryButton = Color(0xff467894);
   static const Color primaryButtonHover = Color(0xff42708A);
@@ -43,7 +44,7 @@ class LocallyLightColors {
   static const Color normalText = Color(0xff555555);
   static const Color smallText = Color(0xff555555);
   static const Color linkText = Color(0xff467894);
-  static const Color errorText = Color(0xffC44343);
+  static const Color errorText = Color(0xff944646);
   static const Color captionText = Color(0xff777777);
   static const Color disabledText = Color(0xff929292);
   static const Color placeholderText = Color(0xff777777);
@@ -52,7 +53,7 @@ class LocallyLightColors {
   static const Color inputBorderHover = Color(0xff3E6B84);
   static const Color inputBorderFocused = Color(0xff3E6B84);
   static const Color inputBorderDisabled = Color(0xffB7B7B7);
-  static const Color inputBorderError = Color(0xffCA2F2F);
+  static const Color inputBorderError = Color(0xff944646);
 
   static const Color black = Color(0xff000000);
   static const Color white = Color(0xffffffff);
