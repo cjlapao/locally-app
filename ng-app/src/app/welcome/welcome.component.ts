@@ -50,4 +50,4 @@ import { CommonModule } from '@angular/common';
     `,
   ],
 })
-export class WelcomePageComponent {}
+export class WelcomeComponent {}
