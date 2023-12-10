@@ -1,0 +1,75 @@
+.ly-icon-create {
+  @apply i-locally-create;
+}
+
+.ly-icon-edit {
+  @apply i-locally-edit;
+}
+
+.ly-icon-delete {
+  @apply i-locally-delete;
+}
+
+.ly-icon-add {
+  @apply i-locally-add;
+}
+
+.ly-icon-remove {
+  @apply i-locally-remove;
+}
+
+.ly-icon-settings {
+  @apply i-locally-settings;
+}
+
+.ly-icon-folder {
+  @apply i-locally-folder;
+}
+
+.ly-icon-close {
+  @apply i-locally-close;
+}
+
+.ly-icon-more {
+  @apply i-locally-more;
+}
+
+.ly-icon-drop-down {
+  @apply i-locally-drop-down;
+}
+
+.ly-icon-filter-sort {
+  @apply i-locally-filter-sort;
+}
+
+.ly-icon-filter {
+  @apply i-locally-filter;
+}
+
+.ly-icon-play {
+  @apply i-locally-play;
+}
+
+.ly-icon-pause {
+  @apply i-locally-pause;
+}
+
+.ly-icon-stop {
+  @apply i-locally-stop;
+}
+
+.ly-icon-cloud {
+  @apply i-locally-cloud;
+}
+
+.ly-icon-search {
+  @apply i-locally-search;
+}
+
+.ly-icon-drive {
+  @apply i-locally-drive;
+}
+
+.ly-icon-document {
+  @apply i-locally-document;
+}

@@ -1,0 +1,45 @@
+.ly-button {
+  @apply px-[9px] py-[5px] inline-flex justify-center items-center gap-[7px] rounded-lg;
+  @apply min-w-[38px] min-h-[38px];
+  @apply bg-transparent border-2 border-solid border-locally-primary-background;
+  @apply font-medium text-base text-locally-primary-background;
+  @apply hover:bg-locally-hover-background;
+  @apply active:bg-locally-selected-background;
+  @apply select-none outline-none;
+  @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-locally-focus-outline;
+  @apply aria-disabled:bg-transparent aria-disabled:border-locally-primary-disabled-background aria-disabled:text-locally-primary-disabled-background aria-disabled:outline-none;
+  @apply aria-pressed:bg-locally-selected-background;
+  @apply transition-colors duration-200;
+}
+
+.ly-button--primary {
+  @apply bg-locally-primary-background;
+  @apply text-locally-primary-text font-normal;
+  @apply hover:bg-locally-primary-hover-background hover:border-locally-primary-hover-background;
+  @apply active:bg-locally-primary-pressed-background active:border-locally-primary-pressed-background;
+  @apply aria-disabled:bg-locally-primary-disabled-background aria-disabled:border-locally-primary-disabled-background aria-disabled:text-locally-primary-text;
+  @apply aria-pressed:bg-locally-primary-pressed-background aria-pressed:border-locally-primary-pressed-background;
+}
+
+.ly-button--text {
+  @apply border-transparent;
+  @apply aria-disabled:border-transparent aria-disabled:text-locally-primary-disabled-background;
+}
+
+.ly-button > * {
+  line-height: inherit;
+}
+
+.ly-button--sm {
+  @apply gap-1 px-[5px] py-[4px] min-w-[32px];
+  @apply text-sm;
+}
+
+.ly-button--lg {
+  @apply gap-1.5 px-[9px] py-[7px] min-w-[46px];
+  @apply text-lg;
+}
+
+a.ly-button {
+  @apply aria-disabled:pointer-events-none;
+}
