@@ -1,0 +1,11 @@
+.ly-form-field {
+  @apply flex flex-col gap-1;
+}
+
+.ly-form-field > label {
+  @apply text-locally-text;
+}
+
+.ly-form-field > caption {
+  @apply text-locally-caption-text text-left text-sm;
+}

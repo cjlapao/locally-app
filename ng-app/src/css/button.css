@@ -1,8 +1,8 @@
 .ly-button {
-  @apply px-[9px] py-[5px] inline-flex justify-center items-center gap-[7px] rounded-lg;
+  @apply px-[9px] py-[5px] inline-flex justify-start items-center gap-[7px] rounded-lg;
   @apply min-w-[38px] min-h-[38px];
   @apply bg-transparent border-2 border-solid border-locally-primary-background;
-  @apply font-medium text-base text-locally-primary-background;
+  @apply font-medium text-base text-locally-primary-background items-start;
   @apply hover:bg-locally-hover-background;
   @apply active:bg-locally-selected-background;
   @apply select-none outline-none;
