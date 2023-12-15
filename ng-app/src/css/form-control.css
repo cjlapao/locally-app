@@ -1,9 +1,9 @@
 .ly-form-control {
-  @apply px-[7px] py-[5px] inline-flex justify-start items-center gap-1 rounded-lg bg-clip-padding;
-  @apply bg-transparent border-2 border-solid border-locally-text-field-outline;
+  @apply inline-flex items-center justify-start gap-1 rounded-lg bg-clip-padding px-[7px] py-[5px];
+  @apply border-2 border-solid border-locally-text-field-outline bg-transparent;
   @apply hover:border-locally-primary-background;
-  @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-locally-focus-outline focus-visible:border-locally-primary-background;
-  @apply aria-disabled:select-none aria-disabled:bg-slate-50 aria-disabled:border-locally-text-field-disabled-ouline aria-disabled:text-locally-text-field-disabled-text aria-disabled:outline-none;
+  @apply focus-visible:border-locally-primary-background focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-locally-focus-outline;
+  @apply aria-disabled:select-none aria-disabled:border-locally-text-field-disabled-ouline aria-disabled:bg-slate-50 aria-disabled:text-locally-text-field-disabled-text aria-disabled:outline-none;
   @apply aria-readonly:border-dotted;
   @apply transition-colors duration-200;
 }
@@ -24,16 +24,22 @@
   @apply text-lg;
 }
 
+.ly-form-control--error {
+  @apply border-locally-status-important;
+  @apply hover:border-locally-status-important;
+  @apply focus-visible:border-locally-status-important focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-locally-error-focus-outline;
+}
+
 .ly-form-control[type="checkbox"],
 .ly-form-control[type="radio"] {
   @apply appearance-none;
   @apply inline-flex align-text-bottom;
-  @apply w-5 h-5 p-0 mr-1.5;
+  @apply mr-1.5 h-5 w-5 p-0;
   @apply hover:bg-sky-100;
   @apply active:border-sky-600 active:bg-sky-200;
-  @apply aria-disabled:select-none aria-disabled:bg-slate-50 aria-disabled:border-slate-400 aria-disabled:text-slate-400 aria-disabled:outline-none;
-  @apply checked:bg-sky-600 checked:border-sky-600;
-  @apply checked:aria-disabled:bg-slate-400 checked:aria-disabled:border-slate-400 checked:aria-disabled:outline-none;
+  @apply aria-disabled:select-none aria-disabled:border-slate-400 aria-disabled:bg-slate-50 aria-disabled:text-slate-400 aria-disabled:outline-none;
+  @apply checked:border-sky-600 checked:bg-sky-600;
+  @apply checked:aria-disabled:border-slate-400 checked:aria-disabled:bg-slate-400 checked:aria-disabled:outline-none;
   @apply aria-readonly:border-dotted;
   @apply bg-center bg-no-repeat;
 }
@@ -48,8 +54,8 @@
 }
 
 .ly-form-control[type="checkbox"]:checked {
-  @apply hover:bg-sky-700 hover:border-sky-700;
-  @apply active:bg-sky-800 active:border-sky-800;
+  @apply hover:border-sky-700 hover:bg-sky-700;
+  @apply active:border-sky-800 active:bg-sky-800;
   background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="transparent" stroke="%23FFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3,8 L7,12 L13,4"/></svg>');
 }
 
@@ -58,47 +64,47 @@
 }
 
 .ly-form-control[type="radio"]:checked {
-  @apply hover:bg-sky-700 hover:border-sky-700;
-  @apply active:bg-sky-800 active:border-sky-800;
+  @apply hover:border-sky-700 hover:bg-sky-700;
+  @apply active:border-sky-800 active:bg-sky-800;
   background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="%23FFF"><circle cx="8" cy="8" r="4" /></svg>');
 }
 
 .ly-form-control[type="range"] {
-  @apply appearance-none p-0 h-2 outline-none my-2;
+  @apply my-2 h-2 appearance-none p-0 outline-none;
 }
 
 .ly-form-control[type="range"]::-webkit-slider-thumb {
-  @apply appearance-none rounded-full border-solid border-2 border-sky-600 w-5 h-5 bg-sky-600 m-0;
-  @apply hover:bg-sky-700 hover:border-sky-700;
-  @apply active:bg-sky-800 active:border-sky-800;
+  @apply m-0 h-5 w-5 appearance-none rounded-full border-2 border-solid border-sky-600 bg-sky-600;
+  @apply hover:border-sky-700 hover:bg-sky-700;
+  @apply active:border-sky-800 active:bg-sky-800;
   @apply select-none outline-none;
   @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-sky-600/50;
 }
 
 .ly-form-control[type="file"] {
-  @apply p-[2px] border-none outline-none overflow-visible;
-  @apply file:px-[7px] file:py-[5px] file:inline-flex file:justify-center file:items-center file:gap-1 file:rounded-lg file:mr-3;
-  @apply file:bg-transparent file:border-2 file:border-solid file:border-sky-600 file:cursor-pointer;
-  @apply file:font-medium file:text-base file:leading-normal file:text-sky-600;
+  @apply overflow-visible border-none p-[2px] outline-none;
+  @apply file:mr-3 file:inline-flex file:items-center file:justify-center file:gap-1 file:rounded-lg file:px-[7px] file:py-[5px];
+  @apply file:cursor-pointer file:border-2 file:border-solid file:border-sky-600 file:bg-transparent;
+  @apply file:text-base file:font-medium file:leading-normal file:text-sky-600;
   @apply file:hover:bg-sky-100;
   @apply file:active:bg-sky-200;
   @apply file:select-none file:outline-none;
   @apply file:focus-visible:outline file:focus-visible:outline-2 file:focus-visible:outline-offset-0 file:focus-visible:outline-sky-600/50;
-  @apply file:aria-disabled:bg-transparent file:aria-disabled:border-slate-400 file:aria-disabled:text-slate-400 file:aria-disabled:outline-none;
+  @apply file:aria-disabled:border-slate-400 file:aria-disabled:bg-transparent file:aria-disabled:text-slate-400 file:aria-disabled:outline-none;
   @apply file:aria-pressed:bg-sky-200;
   @apply file:transition-colors file:duration-200;
 }
 
 .ly-form-control-file-drop-zone {
   @apply cursor-pointer;
-  @apply px-[11px] py-[5px] inline-flex justify-start items-center gap-1 rounded-lg bg-clip-padding;
-  @apply bg-transparent border-2 border-dashed border-slate-400;
+  @apply inline-flex items-center justify-start gap-1 rounded-lg bg-clip-padding px-[11px] py-[5px];
+  @apply border-2 border-dashed border-slate-400 bg-transparent;
   @apply hover:border-sky-600;
-  @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-sky-600/50 focus-visible:border-sky-600;
-  @apply aria-disabled:select-none aria-disabled:bg-slate-50 aria-disabled:border-slate-400 aria-disabled:text-slate-400 aria-disabled:outline-none;
+  @apply focus-visible:border-sky-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-sky-600/50;
+  @apply aria-disabled:select-none aria-disabled:border-slate-400 aria-disabled:bg-slate-50 aria-disabled:text-slate-400 aria-disabled:outline-none;
   @apply aria-readonly:border-dotted;
   @apply transition-colors duration-200;
-  @apply after:content-[attr(text)] after:text-slate-500 after:flex after:left-0 after:top-0 after:bottom-0 after:right-0 file:hidden relative after:absolute text-transparent after:justify-center after:items-center select-none;
+  @apply relative select-none text-transparent file:hidden after:absolute after:bottom-0 after:left-0 after:right-0 after:top-0 after:flex after:items-center after:justify-center after:text-slate-500 after:content-[attr(text)];
 }
 
 .ly-form-control[type="color"] {
@@ -106,9 +112,9 @@
 }
 
 .ly-form-control[type="color"]::-webkit-color-swatch-wrapper {
-  @apply p-0 border-none;
+  @apply border-none p-0;
 }
 
 .ly-form-control[type="color"]::-webkit-color-swatch {
-  @apply border-none h-6;
+  @apply h-6 border-none;
 }

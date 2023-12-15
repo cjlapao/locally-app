@@ -1,28 +1,32 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-contexts-navigation',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   template: `
-    <div class="flex flex-col px-3 py-5 gap-2 border-r border-gray-200">
+    <div class="flex flex-col gap-2 border-r border-gray-200 px-3 py-5">
       <button
         class="ly-button ly-button--text flex-col"
         title="Localhost 1"
         aria-pressed="true"
       >
         <i class="i-locally-drive"></i>
-        <div class="truncate w-[48px]">Localhost 1</div>
+        <div class="w-[48px] truncate">Localhost 1</div>
       </button>
       <button class="ly-button ly-button--text flex-col" title="AWS">
         <i class="i-locally-cloud"></i>
-        <div class="truncate w-[48px]">AWS</div>
+        <div class="w-[48px] truncate">AWS</div>
       </button>
       <button
-        class="ly-button ly-button--text flex-col"
+        class="ly-button ly-button--text !justify-center"
         title="Create a new Context"
-      ><i class="i-locally-add"></i></button>
+        routerLink="new"
+      >
+        <i class="i-locally-add"></i>
+      </button>
     </div>
   `,
   styles: [

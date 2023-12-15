@@ -7,5 +7,9 @@
 }
 
 .ly-form-field > caption {
-  @apply text-locally-caption-text text-left text-sm;
+  @apply text-left text-sm text-locally-caption-text;
+}
+
+.ly-form-field > caption.ly-form-field__error {
+  @apply text-locally-status-important;
 }
