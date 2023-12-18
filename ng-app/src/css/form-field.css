@@ -1,5 +1,9 @@
 .ly-form-field {
-  @apply flex flex-col gap-1;
+  @apply flex flex-col items-start gap-1;
+}
+
+.ly-form-field > .ly-form-control {
+  @apply self-stretch;
 }
 
 .ly-form-field > label {
