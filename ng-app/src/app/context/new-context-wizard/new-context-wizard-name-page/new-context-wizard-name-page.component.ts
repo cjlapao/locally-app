@@ -18,8 +18,8 @@ export interface NameForm {
   imports: [CommonModule, ReactiveFormsModule],
   template: `
     <div class="flex flex-auto flex-col gap-7 px-7 py-7">
-      <div class="flex max-w-[600px] flex-auto flex-col gap-7">
-        <div class="text-xl font-medium">Name</div>
+      <div class="text-xl font-medium">Name</div>
+      <div class="flex max-w-[600px] flex-auto flex-col gap-5">
         <div class="ly-form-field">
           <label for="new-context-wizard-name-field">Context name</label>
           <input
@@ -51,16 +51,20 @@ export interface NameForm {
         </div>
       </div>
       <div class="flex gap-2 [&>*]:!min-w-[100px]">
+        <button class="ly-button" aria-disabled="true" disabled>Back</button>
         <button
           class="ly-button ly-button--primary"
           (click)="next.emit()"
-          [ariaDisabled]="nameGroup.invalid"
-          [attr.disabled]="nameGroup.invalid ? true : undefined"
+          [attr.aria-disabled]="
+            (form.statusChanges | async) === 'VALID' ? undefined : true
+          "
+          [attr.disabled]="
+            (form.statusChanges | async) === 'VALID' ? undefined : true
+          "
         >
           Next
         </button>
-        <button class="ly-button" aria-disabled="true" disabled>Back</button>
-        <button class="ly-button ly-button--text">Cancel</button>
+        <button class="ly-button ml-auto">Cancel</button>
       </div>
     </div>
   `,
@@ -68,10 +72,10 @@ export interface NameForm {
 export class NewContextWizardNamePageComponent {
   @HostBinding('class') class = 'flex flex-col h-full';
 
-  @Input() nameGroup!: FormGroup<NameForm>;
+  @Input() form!: FormGroup<NameForm>;
 
   get name() {
-    return this.nameGroup.controls.name;
+    return this.form.controls.name;
   }
 
   @Output() next = new EventEmitter<void>();
