@@ -30,7 +30,7 @@ import { NameFormModel } from './name-form.model';
         >
           Next
         </button>
-        <button class="ly-button ml-auto">Cancel</button>
+        <button class="ly-button ml-auto" (click)="cancel.emit()">Cancel</button>
       </div>
     </div>
   `,
@@ -41,4 +41,5 @@ export class NamePageComponent {
   @Input() form!: FormGroup<NameFormModel>;
 
   @Output() next = new EventEmitter<void>();
+  @Output() cancel = new EventEmitter<void>();
 }

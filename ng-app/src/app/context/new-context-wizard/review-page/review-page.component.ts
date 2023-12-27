@@ -52,7 +52,7 @@ import { DomainsFormReviewComponent } from '../domains-page/domains-form-review.
         <button class="ly-button" (click)="back.emit()">Back</button>
         <button
           class="ly-button ly-button--primary"
-          (click)="next.emit()"
+          (next)="next.emit()"
           [attr.aria-disabled]="form.status === 'VALID' ? undefined : true"
           [attr.disabled]="form.status === 'VALID' ? undefined : true"
         >
@@ -76,4 +76,5 @@ export class ReviewPageComponent {
 
   @Output() back = new EventEmitter<void>();
   @Output() next = new EventEmitter<void>();
+  @Output() cancel = new EventEmitter<void>();
 }

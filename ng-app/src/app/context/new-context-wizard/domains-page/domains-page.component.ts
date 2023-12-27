@@ -96,7 +96,9 @@ import { DomainsFormModel } from './domains-form.model';
         >
           Next
         </button>
-        <button class="ly-button ml-auto">Cancel</button>
+        <button class="ly-button ml-auto" (click)="cancel.emit()">
+          Cancel
+        </button>
       </div>
     </div>
   `,
@@ -116,4 +118,5 @@ export class DomainsPageComponent {
 
   @Output() back = new EventEmitter<void>();
   @Output() next = new EventEmitter<void>();
+  @Output() cancel = new EventEmitter<void>();
 }
