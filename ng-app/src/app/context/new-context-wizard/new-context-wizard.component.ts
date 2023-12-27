@@ -33,12 +33,13 @@ import { ReviewPageComponent } from './review-page/review-page.component';
     <dialog
       #confirmDlg
       role="presentation"
+      tabindex="-1"
       class="rounded-2xl border-4 border-locally-selected-background bg-white p-8 pt-6 shadow-2xl backdrop:bg-locally-header-background/50"
       (click)="$event.target === confirmDlg && confirmDlg.close()"
     >
       <div class="flex flex-col gap-5 text-locally-text">
         <div class="flex items-center">
-          <div class="text-xl font-medium">Confirmation required</div>
+          <div class="text-xl font-medium">Discard changes?</div>
           <button
             class="ly-button ly-button--text ml-auto"
             (click)="confirmDlg.close()"
@@ -47,15 +48,18 @@ import { ReviewPageComponent } from './review-page/review-page.component';
           </button>
         </div>
         <div class="flex flex-col gap-6">
-          <div>Do you really want to leave context creation wizard?</div>
+          <div>All entered information will be discarded.</div>
           <div class="flex gap-2 [&>*]:!min-w-[100px]">
             <button
+              #confirmDlgDefaultAction
               class="ly-button ly-button--primary"
-              (click)="confirmDlg.close()"
+              (click)="onDiscardChanges()"
             >
-              No
+              Discard
             </button>
-            <button class="ly-button">Yes</button>
+            <button class="ly-button" (click)="confirmDlg.close()">
+              Cancel
+            </button>
           </div>
         </div>
       </div>
@@ -108,6 +112,9 @@ import { ReviewPageComponent } from './review-page/review-page.component';
 })
 export class NewContextWizardComponent {
   @HostBinding('class') class = 'flex flex-col h-full bg-locally-background';
+
+  @ViewChild('confirmDlg') confirmDlg!: ElementRef;
+  @ViewChild('confirmDlgDefaultAction') confirmDlgDefaultAction!: ElementRef;
 
   newContextPage = NewContextWizardPage;
 
@@ -274,17 +281,19 @@ export class NewContextWizardComponent {
     );
   }
 
-  @ViewChild('confirmDlg') confirmDlg!: ElementRef;
-
-  onDialogClick(clickOnBackgdrop: boolean) {
-    console.log(clickOnBackgdrop);
-    if (clickOnBackgdrop) {
-      this.onCancel();
-    }
+  showConfirmationDialog() {
+    this.confirmDlg.nativeElement.showModal();
+    this.confirmDlgDefaultAction.nativeElement.focus();
   }
 
   onCancel() {
-    this.confirmDlg.nativeElement.showModal();
+    if (this.form.dirty) {
+      this.showConfirmationDialog();
+    }
+  }
+
+  onDiscardChanges() {
+    console.log('Cancel!');
   }
 
   onComplete() {
