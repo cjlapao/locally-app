@@ -1,6 +1,13 @@
 .ly-link {
   @apply underline-offset-2 hover:underline;
-  @apply text-locally-link-text active:text-locally-link-text border-none cursor-pointer;
+  @apply cursor-pointer border-none text-locally-link-text active:text-locally-link-text;
+  @apply focus-visible:rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-locally-focus-outline;
+  @apply aria-disabled:pointer-events-none aria-disabled:text-locally-primary-disabled-background;
+}
+
+.ly-link--text {
+  @apply underline underline-offset-2 hover:no-underline;
+  @apply cursor-pointer border-none text-locally-link-text active:text-locally-link-text;
   @apply focus-visible:rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-locally-focus-outline;
   @apply aria-disabled:pointer-events-none aria-disabled:text-locally-primary-disabled-background;
 }
