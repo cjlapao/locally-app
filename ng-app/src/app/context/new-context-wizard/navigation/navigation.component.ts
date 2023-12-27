@@ -1,13 +1,15 @@
 import {
   Component,
+  EventEmitter,
   HostBinding,
   Input,
   OnChanges,
+  Output,
   SimpleChanges,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NewContextPage } from '../new-context-wizard.component';
 import { NavigationItemComponent } from './navigation-item.component';
+import { NewContextWizardPage } from '../new-context-wizard-page';
 
 @Component({
   selector: 'app-navigation',
@@ -22,19 +24,27 @@ import { NavigationItemComponent } from './navigation-item.component';
         <div class="relative flex flex-col gap-5">
           <app-navigation-item
             label="Name"
-            [active]="step >= 0"
+            [passed]="step > 0"
+            [active]="page === newContextWizardPage.NAME"
+            (navigate)="navigate.emit(newContextWizardPage.NAME)"
           ></app-navigation-item>
           <app-navigation-item
             label="Location"
-            [active]="step >= 1"
+            [passed]="step > 1"
+            [active]="page === newContextWizardPage.LOCATION"
+            (navigate)="navigate.emit(newContextWizardPage.LOCATION)"
           ></app-navigation-item>
           <app-navigation-item
             label="Domains"
-            [active]="step >= 2"
+            [passed]="step > 2"
+            [active]="page === newContextWizardPage.DOMAINS"
+            (navigate)="navigate.emit(newContextWizardPage.DOMAINS)"
           ></app-navigation-item>
           <app-navigation-item
             label="Review"
-            [active]="step >= 3"
+            [passed]="step > 3"
+            [active]="page === newContextWizardPage.REVIEW"
+            (navigate)="navigate.emit(newContextWizardPage.REVIEW)"
           ></app-navigation-item>
         </div>
       </div>
@@ -44,24 +54,26 @@ import { NavigationItemComponent } from './navigation-item.component';
 export class NavigationComponent implements OnChanges {
   @HostBinding('class') class = 'flex flex-col h-full';
 
-  newContextPage = NewContextPage;
+  newContextWizardPage = NewContextWizardPage;
 
   step = 0;
 
   @Input() page!: string;
 
+  @Output() navigate = new EventEmitter<NewContextWizardPage>();
+
   ngOnChanges(changes: SimpleChanges): void {
     switch (changes['page']?.currentValue) {
-      case NewContextPage.NAME:
+      case NewContextWizardPage.NAME:
         this.step = 0;
         break;
-      case NewContextPage.LOCATION:
+      case NewContextWizardPage.LOCATION:
         this.step = 1;
         break;
-      case NewContextPage.DOMAINS:
+      case NewContextWizardPage.DOMAINS:
         this.step = 2;
         break;
-      case NewContextPage.REVIEW:
+      case NewContextWizardPage.REVIEW:
         this.step = 3;
         break;
     }

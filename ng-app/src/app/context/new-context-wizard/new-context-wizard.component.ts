@@ -6,30 +6,17 @@ import {
   FormControl,
   Validators,
 } from '@angular/forms';
-import { NameForm, NamePageComponent } from './name-page/name-page.component';
+import { NewContextWizardPage } from './new-context-wizard-page';
+import { NewContextFormModel } from './new-context-form.model';
 import { NavigationComponent } from './navigation/navigation.component';
-import {
-  LocationForm,
-  LocationType,
-  LocationPageComponent,
-} from './location-page/location-page.component';
-import {
-  DomainsForm,
-  DomainsPageComponent,
-} from './domains-page/domains-page.component';
-
-export interface NewContextForm {
-  name: FormGroup<NameForm>;
-  location: FormGroup<LocationForm>;
-  domains: FormGroup<DomainsForm>;
-}
-
-export enum NewContextPage {
-  NAME = 'name',
-  LOCATION = 'location',
-  DOMAINS = 'domains',
-  REVIEW = 'review',
-}
+import { NameFormModel } from './name-page/name-form.model';
+import { NamePageComponent } from './name-page/name-page.component';
+import { LocationType } from './location-page/location-type';
+import { LocationFormModel } from './location-page/location-form.model';
+import { LocationPageComponent } from './location-page/location-page.component';
+import { DomainsFormModel } from './domains-page/domains-form.model';
+import { DomainsPageComponent } from './domains-page/domains-page.component';
+import { ReviewPageComponent } from './review-page/review-page.component';
 
 @Component({
   selector: 'app-new-context-wizard',
@@ -40,17 +27,22 @@ export enum NewContextPage {
     NavigationComponent,
     LocationPageComponent,
     DomainsPageComponent,
+    ReviewPageComponent,
   ],
   template: `
     <div class="flex flex-col bg-locally-header-background px-7 py-4">
       <div class="text-2xl font-medium">Create a new context</div>
       <div class="text-base">
-        Flow the steps to create new environment context
+        Define the location and properties of place to store environment
+        configuration files and data
       </div>
     </div>
     <div class="flex flex-auto gap-2 overflow-hidden">
-      <div class="min-w-[250px] overflow-auto border-r border-gray-200">
-        <app-navigation [page]="currentPage"></app-navigation>
+      <div class="w-[250px] overflow-auto border-r border-gray-200">
+        <app-navigation
+          [page]="currentPage"
+          (navigate)="currentPage = $event"
+        ></app-navigation>
       </div>
       <div class="flex-auto overflow-auto">
         <app-name-page
@@ -70,6 +62,12 @@ export enum NewContextPage {
           (next)="currentPage = newContextPage.REVIEW"
           (back)="currentPage = newContextPage.LOCATION"
         ></app-domains-page>
+        <app-review-page
+          *ngIf="currentPage === newContextPage.REVIEW"
+          [form]="form"
+          (next)="onComplete()"
+          (back)="currentPage = newContextPage.DOMAINS"
+        ></app-review-page>
       </div>
     </div>
   `,
@@ -77,18 +75,18 @@ export enum NewContextPage {
 export class NewContextWizardComponent {
   @HostBinding('class') class = 'flex flex-col h-full bg-locally-background';
 
-  newContextPage = NewContextPage;
+  newContextPage = NewContextWizardPage;
 
-  currentPage = NewContextPage.NAME;
+  currentPage = NewContextWizardPage.NAME;
 
-  form: FormGroup<NewContextForm> = new FormBuilder().group({
-    name: new FormGroup<NameForm>({
+  form: FormGroup<NewContextFormModel> = new FormBuilder().group({
+    name: new FormGroup<NameFormModel>({
       name: new FormControl<string>('', {
         validators: [Validators.required, Validators.minLength(3)],
         nonNullable: true,
       }),
     }),
-    location: new FormGroup<LocationForm>({
+    location: new FormGroup<LocationFormModel>({
       type: new FormControl<string>(LocationType.LOCALLY, {
         nonNullable: true,
       }),
@@ -180,7 +178,7 @@ export class NewContextWizardComponent {
         ),
       }),
     }),
-    domains: new FormGroup<DomainsForm>({
+    domains: new FormGroup<DomainsFormModel>({
       domainName: new FormControl<string>('', {
         validators: [Validators.required],
         nonNullable: true,
@@ -240,5 +238,9 @@ export class NewContextWizardComponent {
         }
       },
     );
+  }
+
+  onComplete() {
+    console.log('Complete!');
   }
 }

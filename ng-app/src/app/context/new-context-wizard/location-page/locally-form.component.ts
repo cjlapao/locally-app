@@ -1,4 +1,4 @@
-import { Component, HostBinding, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
@@ -7,13 +7,13 @@ export interface LocationLocallyForm {
 }
 
 @Component({
-  selector: 'app-location-page-locally-form',
+  selector: 'app-locally-form',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   template: `
     <div class="ly-form-field">
       <label for="new-context-wizard-location-local-path-field"
-        >Context files folder</label
+        >Files folder</label
       >
       <input
         id="new-context-wizard-location-local-path-field"
@@ -34,9 +34,7 @@ export interface LocationLocallyForm {
     </div>
   `,
 })
-export class LocationPageLocallyFormComponent {
-  @HostBinding('class') class = 'contents';
-
+export class LocallyFormComponent {
   @Input() form!: FormGroup<LocationLocallyForm>;
 
   get path() {

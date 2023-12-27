@@ -6,32 +6,12 @@ import {
   Output,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import {
-  LocationLocallyForm,
-  LocationPageLocallyFormComponent,
-} from './location-page-locally-form.component';
-import {
-  LocationAwsForm,
-  LocationPageAwsFormComponent,
-} from './location-page-aws-form.component';
-import {
-  LocationAzureForm,
-  LocationPageAzureFormComponent,
-} from './location-page-azure-form.component';
-
-export interface LocationForm {
-  type: FormControl<string>;
-  locally: FormGroup<LocationLocallyForm>;
-  aws: FormGroup<LocationAwsForm>;
-  azure: FormGroup<LocationAzureForm>;
-}
-
-export enum LocationType {
-  LOCALLY = 'locally',
-  AZURE = 'azure',
-  AWS = 'aws',
-}
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { LocallyFormComponent } from './locally-form.component';
+import { AwsFormComponent } from './aws-form.component';
+import { AzureFormComponent } from './azure-form.component';
+import { LocationFormModel } from './location-form.model';
+import { LocationType } from './location-type';
 
 @Component({
   selector: 'app-location-page',
@@ -74,18 +54,18 @@ export enum LocationType {
             </button>
           </div>
         </div>
-        <app-location-page-locally-form
+        <app-locally-form
           *ngIf="type.value === locationType.LOCALLY"
           [form]="locallyForm"
-        ></app-location-page-locally-form>
-        <app-location-page-aws-form
+        ></app-locally-form>
+        <app-aws-form
           *ngIf="type.value === locationType.AWS"
           [form]="awsForm"
-        ></app-location-page-aws-form>
-        <app-location-page-azure-form
+        ></app-aws-form>
+        <app-azure-form
           *ngIf="type.value === locationType.AZURE"
           [form]="azureForm"
-        ></app-location-page-azure-form>
+        ></app-azure-form>
       </div>
       <div class="flex gap-2 [&>*]:!min-w-[100px]">
         <button class="ly-button" (click)="back.emit()">Back</button>
@@ -104,9 +84,9 @@ export enum LocationType {
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    LocationPageLocallyFormComponent,
-    LocationPageAwsFormComponent,
-    LocationPageAzureFormComponent,
+    LocallyFormComponent,
+    AwsFormComponent,
+    AzureFormComponent,
   ],
 })
 export class LocationPageComponent {
@@ -114,7 +94,7 @@ export class LocationPageComponent {
 
   locationType = LocationType;
 
-  @Input() form!: FormGroup<LocationForm>;
+  @Input() form!: FormGroup<LocationFormModel>;
 
   get type() {
     return this.form.controls.type;
@@ -132,6 +112,6 @@ export class LocationPageComponent {
     return this.form.controls.azure;
   }
 
-  @Output() next = new EventEmitter<void>();
   @Output() back = new EventEmitter<void>();
+  @Output() next = new EventEmitter<void>();
 }

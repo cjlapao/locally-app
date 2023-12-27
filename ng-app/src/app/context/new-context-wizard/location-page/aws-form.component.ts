@@ -1,16 +1,10 @@
 import { Component, HostBinding, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-
-export interface LocationAwsForm {
-  accessKeyId: FormControl<string>;
-  accessKeySecret: FormControl<string>;
-  region: FormControl<string>;
-  bucketName: FormControl<string>;
-}
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { AwsForm } from './aws-form.model';
 
 @Component({
-  selector: 'app-location-page-aws-form',
+  selector: 'app-aws-form',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   template: `
@@ -128,10 +122,10 @@ export interface LocationAwsForm {
     </div>
   `,
 })
-export class LocationPageAwsFormComponent {
+export class AwsFormComponent {
   @HostBinding('class') class = 'contents';
 
-  @Input() form!: FormGroup<LocationAwsForm>;
+  @Input() form!: FormGroup<AwsForm>;
 
   get accessKeyId() {
     return this.form.controls.accessKeyId;

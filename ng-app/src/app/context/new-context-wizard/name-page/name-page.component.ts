@@ -6,49 +6,19 @@ import {
   Output,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-
-export interface NameForm {
-  name: FormControl<string>;
-}
+import { FormGroup } from '@angular/forms';
+import { NameFormComponent } from './name-form.component';
+import { NameFormModel } from './name-form.model';
 
 @Component({
   selector: 'app-name-page',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, NameFormComponent],
   template: `
     <div class="flex flex-auto flex-col gap-7 px-7 py-7">
       <div class="text-xl font-medium">Name</div>
       <div class="flex max-w-[600px] flex-auto flex-col gap-5">
-        <div class="ly-form-field">
-          <label for="new-context-wizard-name-field">Context name</label>
-          <input
-            id="new-context-wizard-name-field"
-            class="ly-form-control"
-            [class.ly-form-control--error]="
-              name.invalid && (name.dirty || name.touched)
-            "
-            [formControl]="name"
-          />
-          <ng-container *ngIf="name.invalid && (name.dirty || name.touched)">
-            <caption
-              *ngIf="name.errors?.['required']"
-              class="ly-form-field__error"
-            >
-              Name is required.
-            </caption>
-            <caption
-              *ngIf="name.errors?.['minlength']"
-              class="ly-form-field__error"
-            >
-              Name must be at least 3 characters long.
-            </caption>
-          </ng-container>
-          <caption>
-            Human readable name for the context will be displayed across the app
-            and in CLI.
-          </caption>
-        </div>
+        <app-name-form [form]="form"></app-name-form>
       </div>
       <div class="flex gap-2 [&>*]:!min-w-[100px]">
         <button class="ly-button" aria-disabled="true" disabled>Back</button>
@@ -68,11 +38,7 @@ export interface NameForm {
 export class NamePageComponent {
   @HostBinding('class') class = 'flex flex-col h-full';
 
-  @Input() form!: FormGroup<NameForm>;
-
-  get name() {
-    return this.form.controls.name;
-  }
+  @Input() form!: FormGroup<NameFormModel>;
 
   @Output() next = new EventEmitter<void>();
 }

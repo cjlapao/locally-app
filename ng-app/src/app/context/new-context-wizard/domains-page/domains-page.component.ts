@@ -6,12 +6,8 @@ import {
   Output,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-
-export interface DomainsForm {
-  domainName: FormControl<string>;
-  subDomainName: FormControl<string>;
-}
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { DomainsFormModel } from './domains-form.model';
 
 @Component({
   selector: 'app-domains-page',
@@ -91,7 +87,7 @@ export interface DomainsForm {
         </div>
       </div>
       <div class="flex gap-2 [&>*]:!min-w-[100px]">
-        <button class="ly-button" aria-disabled="true" disabled>Back</button>
+        <button class="ly-button" (click)="back.emit()">Back</button>
         <button
           class="ly-button ly-button--primary"
           (click)="next.emit()"
@@ -108,7 +104,7 @@ export interface DomainsForm {
 export class DomainsPageComponent {
   @HostBinding('class') class = 'flex flex-col h-full';
 
-  @Input() form!: FormGroup<DomainsForm>;
+  @Input() form!: FormGroup<DomainsFormModel>;
 
   get domainName() {
     return this.form.controls.domainName;
@@ -118,5 +114,6 @@ export class DomainsPageComponent {
     return this.form.controls.subDomainName;
   }
 
+  @Output() back = new EventEmitter<void>();
   @Output() next = new EventEmitter<void>();
 }

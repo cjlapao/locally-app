@@ -1,19 +1,11 @@
 import { Component, HostBinding, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { AzureForm } from './azure-form.model';
 
-export interface LocationAzureForm {
-  subscriptionId: FormControl<string>;
-  tenantId: FormControl<string>;
-  clientId: FormControl<string>;
-  clientSecret: FormControl<string>;
-  storageAccountName: FormControl<string>;
-  resourceGroupName: FormControl<string>;
-  containerName: FormControl<string>;
-}
 
 @Component({
-  selector: 'app-location-page-azure-form',
+  selector: 'app-azure-form',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   template: `
@@ -145,7 +137,7 @@ export interface LocationAzureForm {
     <div class="ly-form-field">
       <label
         for="new-context-wizard-location-azure-resource-account-group-field"
-        >Resource account group</label
+        >Resource group name</label
       >
       <input
         id="new-context-wizard-location-azure-resource-account-group-field"
@@ -203,10 +195,10 @@ export interface LocationAzureForm {
     </div>
   `,
 })
-export class LocationPageAzureFormComponent {
+export class AzureFormComponent {
   @HostBinding('class') class = 'contents';
 
-  @Input() form!: FormGroup<LocationAzureForm>;
+  @Input() form!: FormGroup<AzureForm>;
 
   get subscriptionId() {
     return this.form.controls.subscriptionId;
