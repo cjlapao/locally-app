@@ -13,7 +13,7 @@ export interface NameForm {
 }
 
 @Component({
-  selector: 'app-new-context-wizard-name-page',
+  selector: 'app-name-page',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   template: `
@@ -55,12 +55,8 @@ export interface NameForm {
         <button
           class="ly-button ly-button--primary"
           (click)="next.emit()"
-          [attr.aria-disabled]="
-            (form.statusChanges | async) === 'VALID' ? undefined : true
-          "
-          [attr.disabled]="
-            (form.statusChanges | async) === 'VALID' ? undefined : true
-          "
+          [attr.aria-disabled]="form.status === 'VALID' ? undefined : true"
+          [attr.disabled]="form.status === 'VALID' ? undefined : true"
         >
           Next
         </button>
@@ -69,7 +65,7 @@ export interface NameForm {
     </div>
   `,
 })
-export class NewContextWizardNamePageComponent {
+export class NamePageComponent {
   @HostBinding('class') class = 'flex flex-col h-full';
 
   @Input() form!: FormGroup<NameForm>;
