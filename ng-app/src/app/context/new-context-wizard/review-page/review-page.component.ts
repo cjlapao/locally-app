@@ -58,7 +58,9 @@ import { DomainsFormReviewComponent } from '../domains-page/domains-form-review.
         >
           Complete
         </button>
-        <button class="ly-button ml-auto">Cancel</button>
+        <button class="ly-button ml-auto" (click)="cancel.emit()">
+          Cancel
+        </button>
       </div>
     </div>
   `,

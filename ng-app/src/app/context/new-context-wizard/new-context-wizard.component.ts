@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostBinding, ViewChild } from '@angular/core';
+import { Component, HostBinding, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormGroup,
@@ -6,6 +6,7 @@ import {
   FormControl,
   Validators,
 } from '@angular/forms';
+import { DiscardChangesConfirmationDialogComponent } from '../../shared/discard-changes-confirmation-dialog/discard-changes-confirmation-dialog.component';
 import { NewContextWizardPage } from './new-context-wizard-page';
 import { NewContextFormModel } from './new-context-form.model';
 import { NavigationComponent } from './navigation/navigation.component';
@@ -23,6 +24,7 @@ import { ReviewPageComponent } from './review-page/review-page.component';
   standalone: true,
   imports: [
     CommonModule,
+    DiscardChangesConfirmationDialogComponent,
     NamePageComponent,
     NavigationComponent,
     LocationPageComponent,
@@ -30,40 +32,6 @@ import { ReviewPageComponent } from './review-page/review-page.component';
     ReviewPageComponent,
   ],
   template: `
-    <dialog
-      #confirmDlg
-      role="presentation"
-      tabindex="-1"
-      class="rounded-2xl border-4 border-locally-selected-background bg-white p-8 pt-6 shadow-2xl backdrop:bg-locally-header-background/50"
-      (click)="$event.target === confirmDlg && confirmDlg.close()"
-    >
-      <div class="flex flex-col gap-5 text-locally-text">
-        <div class="flex items-center">
-          <div class="text-xl font-medium">Discard changes?</div>
-          <button
-            class="ly-button ly-button--text ml-auto"
-            (click)="confirmDlg.close()"
-          >
-            <i class="ly-icon-close"></i>
-          </button>
-        </div>
-        <div class="flex flex-col gap-6">
-          <div>All entered information will be discarded.</div>
-          <div class="flex gap-2 [&>*]:!min-w-[100px]">
-            <button
-              #confirmDlgDefaultAction
-              class="ly-button ly-button--primary"
-              (click)="onDiscardChanges()"
-            >
-              Discard
-            </button>
-            <button class="ly-button" (click)="confirmDlg.close()">
-              Cancel
-            </button>
-          </div>
-        </div>
-      </div>
-    </dialog>
     <div class="flex flex-col bg-locally-header-background px-7 py-4">
       <div class="text-2xl font-medium">Create a new context</div>
       <div class="text-base">
@@ -108,13 +76,17 @@ import { ReviewPageComponent } from './review-page/review-page.component';
         ></app-review-page>
       </div>
     </div>
+    <app-discard-changes-confirmation-dialog
+      #confirmDiscardChangesDialog
+      (confirm)="onConfirmDiscardChanges()"
+    />
   `,
 })
 export class NewContextWizardComponent {
   @HostBinding('class') class = 'flex flex-col h-full bg-locally-background';
 
-  @ViewChild('confirmDlg') confirmDlg!: ElementRef;
-  @ViewChild('confirmDlgDefaultAction') confirmDlgDefaultAction!: ElementRef;
+  @ViewChild('confirmDiscardChangesDialog')
+  confirmDiscardChangesDialog!: DiscardChangesConfirmationDialogComponent;
 
   newContextPage = NewContextWizardPage;
 
@@ -281,18 +253,13 @@ export class NewContextWizardComponent {
     );
   }
 
-  showConfirmationDialog() {
-    this.confirmDlg.nativeElement.showModal();
-    this.confirmDlgDefaultAction.nativeElement.focus();
-  }
-
   onCancel() {
     if (this.form.dirty) {
-      this.showConfirmationDialog();
+      this.confirmDiscardChangesDialog.show();
     }
   }
 
-  onDiscardChanges() {
+  onConfirmDiscardChanges() {
     console.log('Cancel!');
   }
 
