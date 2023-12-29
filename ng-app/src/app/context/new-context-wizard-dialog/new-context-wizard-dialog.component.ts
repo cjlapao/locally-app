@@ -36,9 +36,10 @@ import { ReviewPageComponent } from './review-page/review-page.component';
       #wizardDialogEl
       role="presentation"
       tabindex="-1"
-      class="h-full w-full rounded-xl bg-locally-background text-locally-text shadow-2xl backdrop:bg-locally-text/30"
+      class="h-full w-full rounded-xl bg-locally-background text-locally-text shadow-2xl outline-none backdrop:bg-locally-text/30"
       style="max-height: min(calc(100vh - 30px), 900px); max-width: min(calc(100vw - 30px), 1000px);"
       (click)="$event.target === wizardDialogEl && onCancel()"
+      (cancel)="$event.preventDefault(); onCancel()"
     >
       <div class="flex h-full w-full flex-col bg-locally-background">
         <div class="flex flex-col bg-locally-header-background px-7 py-4">

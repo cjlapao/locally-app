@@ -17,7 +17,7 @@ import { CommonModule } from '@angular/common';
       #confirmDlg
       role="presentation"
       tabindex="-1"
-      class="rounded-xl bg-white p-8 pt-6 shadow-2xl backdrop:bg-locally-text/30"
+      class="rounded-xl bg-white p-8 pt-6 shadow-2xl outline-none backdrop:bg-locally-text/30"
       (click)="$event.target === confirmDlg && onCancel()"
     >
       <div class="flex flex-col gap-5 text-locally-text">
