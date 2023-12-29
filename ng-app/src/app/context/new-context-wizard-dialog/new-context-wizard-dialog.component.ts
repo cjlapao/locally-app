@@ -277,6 +277,8 @@ export class NewContextWizardDialogComponent {
   }
 
   show() {
+    this.currentPage = NewContextWizardPage.NAME;
+    this.form.reset();
     this.wizardDialogEl.nativeElement.showModal();
   }
 
