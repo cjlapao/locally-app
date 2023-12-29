@@ -1,4 +1,4 @@
-import { Component, HostBinding, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostBinding, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormGroup,
@@ -20,7 +20,7 @@ import { DomainsPageComponent } from './domains-page/domains-page.component';
 import { ReviewPageComponent } from './review-page/review-page.component';
 
 @Component({
-  selector: 'app-new-context-wizard',
+  selector: 'app-new-context-wizard-dialog',
   standalone: true,
   imports: [
     CommonModule,
@@ -32,58 +32,81 @@ import { ReviewPageComponent } from './review-page/review-page.component';
     ReviewPageComponent,
   ],
   template: `
-    <div class="flex flex-col bg-locally-header-background px-7 py-4">
-      <div class="text-2xl font-medium">Create a new context</div>
-      <div class="text-base">
-        Define the location and properties of place to store environment
-        configuration files and data
+    <dialog
+      #wizardDialogEl
+      role="presentation"
+      tabindex="-1"
+      class="h-full w-full rounded-xl bg-locally-background text-locally-text shadow-2xl backdrop:bg-locally-text/30"
+      style="max-height: min(calc(100vh - 30px), 900px); max-width: min(calc(100vw - 30px), 1000px);"
+      (click)="$event.target === wizardDialogEl && onCancel()"
+    >
+      <div class="flex h-full w-full flex-col bg-locally-background">
+        <div class="flex flex-col bg-locally-header-background px-7 py-4">
+          <div class="flex items-center">
+            <div>
+              <div class="text-2xl font-medium">Create a new context</div>
+              <div class="text-base">
+                Define the location and properties of place to store environment
+                configuration files and data
+              </div>
+            </div>
+            <button
+              class="ly-button ly-button--text ml-auto"
+              (click)="onCancel()"
+            >
+              <i class="ly-icon-close"></i>
+            </button>
+          </div>
+        </div>
+        <div class="flex flex-auto gap-2 overflow-hidden">
+          <div class="w-[250px] overflow-auto border-r border-gray-200">
+            <app-navigation
+              [page]="currentPage"
+              (navigate)="currentPage = $event"
+            ></app-navigation>
+          </div>
+          <div class="flex-auto overflow-auto">
+            <app-name-page
+              [form]="nameForm"
+              *ngIf="currentPage === newContextPage.NAME"
+              (next)="currentPage = newContextPage.LOCATION"
+              (cancel)="onCancel()"
+            ></app-name-page>
+            <app-location-page
+              *ngIf="currentPage === newContextPage.LOCATION"
+              [form]="locationForm"
+              (next)="currentPage = newContextPage.DOMAINS"
+              (back)="currentPage = newContextPage.NAME"
+              (cancel)="onCancel()"
+            ></app-location-page>
+            <app-domains-page
+              *ngIf="currentPage === newContextPage.DOMAINS"
+              [form]="domainsForm"
+              (next)="currentPage = newContextPage.REVIEW"
+              (back)="currentPage = newContextPage.LOCATION"
+              (cancel)="onCancel()"
+            ></app-domains-page>
+            <app-review-page
+              *ngIf="currentPage === newContextPage.REVIEW"
+              [form]="form"
+              (next)="onComplete()"
+              (back)="currentPage = newContextPage.DOMAINS"
+              (cancel)="onCancel()"
+            ></app-review-page>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="flex flex-auto gap-2 overflow-hidden">
-      <div class="w-[250px] overflow-auto border-r border-gray-200">
-        <app-navigation
-          [page]="currentPage"
-          (navigate)="currentPage = $event"
-        ></app-navigation>
-      </div>
-      <div class="flex-auto overflow-auto">
-        <app-name-page
-          [form]="nameForm"
-          *ngIf="currentPage === newContextPage.NAME"
-          (next)="currentPage = newContextPage.LOCATION"
-          (cancel)="onCancel()"
-        ></app-name-page>
-        <app-location-page
-          *ngIf="currentPage === newContextPage.LOCATION"
-          [form]="locationForm"
-          (next)="currentPage = newContextPage.DOMAINS"
-          (back)="currentPage = newContextPage.NAME"
-          (cancel)="onCancel()"
-        ></app-location-page>
-        <app-domains-page
-          *ngIf="currentPage === newContextPage.DOMAINS"
-          [form]="domainsForm"
-          (next)="currentPage = newContextPage.REVIEW"
-          (back)="currentPage = newContextPage.LOCATION"
-          (cancel)="onCancel()"
-        ></app-domains-page>
-        <app-review-page
-          *ngIf="currentPage === newContextPage.REVIEW"
-          [form]="form"
-          (next)="onComplete()"
-          (back)="currentPage = newContextPage.DOMAINS"
-          (cancel)="onCancel()"
-        ></app-review-page>
-      </div>
-    </div>
+    </dialog>
     <app-discard-changes-confirmation-dialog
       #confirmDiscardChangesDialog
       (confirm)="onConfirmDiscardChanges()"
     />
   `,
 })
-export class NewContextWizardComponent {
-  @HostBinding('class') class = 'flex flex-col h-full bg-locally-background';
+export class NewContextWizardDialogComponent {
+  @HostBinding('class') class = 'contents';
+
+  @ViewChild('wizardDialogEl') wizardDialogEl!: ElementRef;
 
   @ViewChild('confirmDiscardChangesDialog')
   confirmDiscardChangesDialog!: DiscardChangesConfirmationDialogComponent;
@@ -253,14 +276,24 @@ export class NewContextWizardComponent {
     );
   }
 
+  show() {
+    this.wizardDialogEl.nativeElement.showModal();
+  }
+
+  close() {
+    this.wizardDialogEl.nativeElement.close();
+  }
+
   onCancel() {
     if (this.form.dirty) {
       this.confirmDiscardChangesDialog.show();
+    } else {
+      this.close();
     }
   }
 
   onConfirmDiscardChanges() {
-    console.log('Cancel!');
+    this.close();
   }
 
   onComplete() {
