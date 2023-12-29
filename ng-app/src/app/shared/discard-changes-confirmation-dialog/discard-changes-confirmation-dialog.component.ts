@@ -67,6 +67,7 @@ export class DiscardChangesConfirmationDialogComponent {
 
   onConfirm() {
     this.confirm.emit();
+    this.close();
   }
 
   onCancel() {
