@@ -18,6 +18,7 @@ import { LocationPageComponent } from './location-page/location-page.component';
 import { DomainsFormModel } from './domains-page/domains-form.model';
 import { DomainsPageComponent } from './domains-page/domains-page.component';
 import { ReviewPageComponent } from './review-page/review-page.component';
+import { ProcessingDialogComponent } from '../../shared/process-dialog/process-dialog.component';
 
 @Component({
   selector: 'app-new-context-wizard-dialog',
@@ -30,6 +31,7 @@ import { ReviewPageComponent } from './review-page/review-page.component';
     LocationPageComponent,
     DomainsPageComponent,
     ReviewPageComponent,
+    ProcessingDialogComponent,
   ],
   template: `
     <dialog
@@ -90,7 +92,7 @@ import { ReviewPageComponent } from './review-page/review-page.component';
             <app-review-page
               *ngIf="currentPage === newContextPage.REVIEW"
               [form]="form"
-              (next)="onComplete()"
+              (next)="onCreate()"
               (back)="currentPage = newContextPage.DOMAINS"
               (cancel)="onCancel()"
             ></app-review-page>
@@ -102,6 +104,11 @@ import { ReviewPageComponent } from './review-page/review-page.component';
       #confirmDiscardChangesDialog
       (confirm)="onConfirmDiscardChanges()"
     />
+    <app-processing-dialog
+      #processingDialog
+      title="Creating new context"
+      message="Please wait..."
+    />
   `,
 })
 export class NewContextWizardDialogComponent {
@@ -111,6 +118,9 @@ export class NewContextWizardDialogComponent {
 
   @ViewChild('confirmDiscardChangesDialog')
   confirmDiscardChangesDialog!: DiscardChangesConfirmationDialogComponent;
+
+  @ViewChild('processingDialog')
+  processingDialog!: ProcessingDialogComponent;
 
   newContextPage = NewContextWizardPage;
 
@@ -299,7 +309,11 @@ export class NewContextWizardDialogComponent {
     this.close();
   }
 
-  onComplete() {
+  onCreate() {
     console.log('Complete!');
+
+    this.processingDialog.show();
+
+    setTimeout(() => this.processingDialog.close(), 5000);
   }
 }

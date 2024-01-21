@@ -52,11 +52,11 @@ import { DomainsFormReviewComponent } from '../domains-page/domains-form-review.
         <button class="ly-button" (click)="back.emit()">Back</button>
         <button
           class="ly-button ly-button--primary"
-          (next)="next.emit()"
+          (click)="next.emit()"
           [attr.aria-disabled]="form.status === 'VALID' ? undefined : true"
           [attr.disabled]="form.status === 'VALID' ? undefined : true"
         >
-          Complete
+          Create
         </button>
         <button class="ly-button ml-auto" (click)="cancel.emit()">
           Cancel

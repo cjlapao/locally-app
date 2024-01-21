@@ -7,18 +7,18 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   template: `
     <div
-      class="flex flex-col p-6 min-w-[250px] gap-5 border-r border-gray-200 overflow-auto"
+      class="flex min-w-[250px] flex-col gap-5 overflow-auto border-r border-gray-200 p-6"
     >
       <div class="flex flex-col gap-1">
         <div class="text-xl font-medium">Localhost 1</div>
         <div class="text-sm">
           <i
-            class="i-locally-drive text-locally-text relative top-[.15em] mr-1"
+            class="i-locally-drive relative top-[.15em] mr-1 text-locally-text"
           ></i>
           Local context
         </div>
       </div>
-      <div class="grow flex flex-col gap-1 items-stretch">
+      <div class="flex grow flex-col items-stretch gap-1">
         <!-- <a class="ly-link flex flex-row items-center gap-2 font-semibold"
           ><i class="i-locally-folder"></i>Lanes
           <div class="ml-auto font-normal">4</div></a
@@ -56,7 +56,7 @@ import { CommonModule } from '@angular/common';
           <div class="truncate">Vaults</div>
           <div class="ml-auto font-normal"></div>
         </button>
-        <button class="mt-auto ly-button ly-button--text !justify-start">
+        <button class="ly-button ly-button--text mt-auto !justify-start">
           <i class="i-locally-settings"></i>
           <div class="truncate">Settings</div>
           <div class="ml-auto font-normal"></div>
