@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
@@ -6,7 +5,7 @@ import { LocationFormModel } from './location-form.model';
 
 @Component({
   selector: 'app-location-form-review',
-  imports: [CommonModule],
+  imports: [],
   template: `
     <table class="ly-table w-full">
       <colgroup>

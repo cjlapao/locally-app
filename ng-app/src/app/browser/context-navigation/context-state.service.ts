@@ -1,4 +1,4 @@
-import { Injectable, computed, signal } from '@angular/core';
+import { Injectable, computed, signal, inject } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { ContextBackendService } from '../../shared/contexts-backend.service';
 import { LocationType } from '../../context/new-context-wizard-dialog/location-page/location-type';
@@ -17,6 +17,8 @@ export interface Context {
   providedIn: 'root',
 })
 export class ContextStateService {
+  private contextService = inject(ContextBackendService);
+
   contexts = signal<Array<Context> | null>(null);
 
   activeContextId = signal<string | null>(null);
@@ -36,7 +38,7 @@ export class ContextStateService {
     }
   });
 
-  constructor(private contextService: ContextBackendService) {
+  constructor() {
     this.loadContexts();
   }
 

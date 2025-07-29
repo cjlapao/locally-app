@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   Component,
   ElementRef,
@@ -10,7 +9,7 @@ import {
 
 @Component({
   selector: 'app-discard-changes-confirmation-dialog',
-  imports: [CommonModule],
+  imports: [],
   template: `
     <dialog
       #confirmDlg
@@ -52,8 +51,8 @@ export class DiscardChangesConfirmationDialogComponent {
   @ViewChild('confirmDlg') confirmDlg!: ElementRef;
   @ViewChild('confirmDlgDefaultAction') confirmDlgDefaultAction!: ElementRef;
 
-  @Output() confirm = new EventEmitter<void>();
-  @Output() cancel = new EventEmitter<void>();
+  @Output() confirmed = new EventEmitter<void>();
+  @Output() canceled = new EventEmitter<void>();
 
   show() {
     this.confirmDlg.nativeElement.showModal();
@@ -65,12 +64,12 @@ export class DiscardChangesConfirmationDialogComponent {
   }
 
   onConfirm() {
-    this.confirm.emit();
+    this.confirmed.emit();
     this.close();
   }
 
   onCancel() {
-    this.cancel.emit();
+    this.canceled.emit();
     this.close();
   }
 }

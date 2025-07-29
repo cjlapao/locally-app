@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   Component,
   EventEmitter,
@@ -54,37 +53,33 @@ import { LocationType } from './location-type';
             </button>
           </div>
         </div>
-        <app-locally-form
-          *ngIf="type.value === locationType.LOCALLY"
-          [form]="locallyForm"
-        ></app-locally-form>
-        <app-aws-form
-          *ngIf="type.value === locationType.AWS"
-          [form]="awsForm"
-        ></app-aws-form>
-        <app-azure-form
-          *ngIf="type.value === locationType.AZURE"
-          [form]="azureForm"
-        ></app-azure-form>
+        @if (type.value === locationType.LOCALLY) {
+          <app-locally-form [form]="locallyForm"></app-locally-form>
+        }
+        @if (type.value === locationType.AWS) {
+          <app-aws-form [form]="awsForm"></app-aws-form>
+        }
+        @if (type.value === locationType.AZURE) {
+          <app-azure-form [form]="azureForm"></app-azure-form>
+        }
       </div>
       <div class="flex gap-2 [&>*]:!min-w-[100px]">
-        <button class="ly-button" (click)="back.emit()">Back</button>
+        <button class="ly-button" (click)="navigateBack.emit()">Back</button>
         <button
           class="ly-button ly-button--primary"
-          (click)="next.emit()"
+          (click)="navigateNext.emit()"
           [attr.aria-disabled]="form.status === 'VALID' ? undefined : true"
           [attr.disabled]="form.status === 'VALID' ? undefined : true"
         >
           Next
         </button>
-        <button class="ly-button ml-auto" (click)="cancel.emit()">
+        <button class="ly-button ml-auto" (click)="canceled.emit()">
           Cancel
         </button>
       </div>
     </div>
   `,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     LocallyFormComponent,
     AwsFormComponent,
@@ -114,7 +109,7 @@ export class LocationPageComponent {
     return this.form.controls.azure;
   }
 
-  @Output() back = new EventEmitter<void>();
-  @Output() next = new EventEmitter<void>();
-  @Output() cancel = new EventEmitter<void>();
+  @Output() navigateBack = new EventEmitter<void>();
+  @Output() navigateNext = new EventEmitter<void>();
+  @Output() canceled = new EventEmitter<void>();
 }

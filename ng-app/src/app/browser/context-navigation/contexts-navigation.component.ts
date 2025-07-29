@@ -1,5 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { Component, HostBinding } from '@angular/core';
+import { Component, HostBinding, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { NewContextWizardDialogComponent } from '../../context/new-context-wizard-dialog/new-context-wizard-dialog.component';
@@ -7,7 +6,7 @@ import { ContextStateService } from './context-state.service';
 
 @Component({
   selector: 'app-contexts-navigation',
-  imports: [CommonModule, RouterModule, NewContextWizardDialogComponent],
+  imports: [RouterModule, NewContextWizardDialogComponent],
   template: `
     <div
       class="flex w-[100px] flex-col gap-2 border-r border-gray-200 px-3 py-5"
@@ -45,9 +44,9 @@ import { ContextStateService } from './context-state.service';
   `
 })
 export class ContextsNavigationComponent {
-  @HostBinding('class') class = 'contents';
+  contextStateService = inject(ContextStateService);
 
-  constructor(public contextStateService: ContextStateService) {}
+  @HostBinding('class') class = 'contents';
 
   contexts = this.contextStateService.contexts;
   activeContextId = this.contextStateService.activeContextId;

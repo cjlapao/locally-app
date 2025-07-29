@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   Component,
   ElementRef,
@@ -9,7 +8,7 @@ import {
 
 @Component({
   selector: 'app-processing-dialog',
-  imports: [CommonModule],
+  imports: [],
   template: `
     <dialog
       #processDlg

@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   Component,
   EventEmitter,
@@ -20,7 +19,6 @@ import { NewContextFormModel } from '../new-context-form.model';
 @Component({
   selector: 'app-review-page',
   imports: [
-    CommonModule,
     NameFormReviewComponent,
     LocationFormReviewComponent,
     LocallyFormReviewComponent,
@@ -34,31 +32,32 @@ import { NewContextFormModel } from '../new-context-form.model';
       <div class="flex max-w-[1200px] flex-auto flex-col gap-5">
         <app-name-form-review [form]="form.controls.name" />
         <app-location-form-review [form]="form.controls.location" />
-        <app-locally-form-review
-          *ngIf="locationFormType.value === locationType.LOCALLY"
-          [form]="form.controls.location.controls.locally"
-        />
-        <app-aws-form-review
-          *ngIf="locationFormType.value === locationType.AWS"
-          [form]="form.controls.location.controls.aws"
-        />
-        <app-azure-form-review
-          *ngIf="locationFormType.value === locationType.AZURE"
-          [form]="form.controls.location.controls.azure"
-        />
+        @if (locationFormType.value === locationType.LOCALLY) {
+          <app-locally-form-review
+            [form]="form.controls.location.controls.locally"
+          />
+        }
+        @if (locationFormType.value === locationType.AWS) {
+          <app-aws-form-review [form]="form.controls.location.controls.aws" />
+        }
+        @if (locationFormType.value === locationType.AZURE) {
+          <app-azure-form-review
+            [form]="form.controls.location.controls.azure"
+          />
+        }
         <app-domains-form-review [form]="form.controls.domains" />
       </div>
       <div class="flex gap-2 [&>*]:!min-w-[100px]">
-        <button class="ly-button" (click)="back.emit()">Back</button>
+        <button class="ly-button" (click)="navigateBack.emit()">Back</button>
         <button
           class="ly-button ly-button--primary"
-          (click)="next.emit()"
+          (click)="navigateNext.emit()"
           [attr.aria-disabled]="form.status === 'VALID' ? undefined : true"
           [attr.disabled]="form.status === 'VALID' ? undefined : true"
         >
           Create
         </button>
-        <button class="ly-button ml-auto" (click)="cancel.emit()">
+        <button class="ly-button ml-auto" (click)="canceled.emit()">
           Cancel
         </button>
       </div>
@@ -76,7 +75,7 @@ export class ReviewPageComponent {
     return this.form.controls.location.controls.type;
   }
 
-  @Output() back = new EventEmitter<void>();
-  @Output() next = new EventEmitter<void>();
-  @Output() cancel = new EventEmitter<void>();
+  @Output() navigateBack = new EventEmitter<void>();
+  @Output() navigateNext = new EventEmitter<void>();
+  @Output() canceled = new EventEmitter<void>();
 }

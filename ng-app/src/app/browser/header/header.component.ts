@@ -1,9 +1,8 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-header',
-  imports: [CommonModule],
+  imports: [],
   template: `
     <div class="flex flex-row bg-locally-header-background p-5">
       <img

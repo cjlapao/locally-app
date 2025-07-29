@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { LocationType } from '../context/new-context-wizard-dialog/location-page/location-type';
 import { Context } from '../browser/context-navigation/context-state.service';
@@ -17,7 +17,8 @@ export type GetAllContextsResponse = Array<{
   providedIn: 'root',
 })
 export class ContextBackendService {
-  constructor(private http: HttpClient) {}
+  private http = inject(HttpClient);
+
 
   getAllContexts(): Observable<Array<Context>> {
     return this.http.get<GetAllContextsResponse>('/GetAllContexts').pipe(

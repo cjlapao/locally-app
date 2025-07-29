@@ -1,9 +1,8 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-welcome-page',
-  imports: [CommonModule],
+  imports: [],
   template: `
     <div class="flex h-[100vh] flex-col overflow-auto bg-locally-background">
       <div

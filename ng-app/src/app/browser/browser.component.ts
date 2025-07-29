@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, HostBinding } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
@@ -9,7 +8,6 @@ import { ServicesNavigationComponent } from './services-navigation/services-navi
 @Component({
   selector: 'app-browser',
   imports: [
-    CommonModule,
     RouterOutlet,
     HeaderComponent,
     ContextsNavigationComponent,

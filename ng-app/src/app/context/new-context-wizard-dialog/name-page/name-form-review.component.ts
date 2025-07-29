@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
@@ -6,7 +5,7 @@ import { NameFormModel } from './name-form.model';
 
 @Component({
   selector: 'app-name-form-review',
-  imports: [CommonModule],
+  imports: [],
   template: `
     <table class="ly-table w-full">
       <colgroup>

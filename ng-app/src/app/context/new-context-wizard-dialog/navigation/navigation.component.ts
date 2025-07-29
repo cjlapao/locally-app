@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   Component,
   EventEmitter,
@@ -14,7 +13,7 @@ import { NavigationItemComponent } from './navigation-item.component';
 
 @Component({
   selector: 'app-navigation',
-  imports: [CommonModule, NavigationItemComponent],
+  imports: [NavigationItemComponent],
   template: `
     <div class="px-7 py-7">
       <div class="relative">

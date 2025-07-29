@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   Component,
   EventEmitter,
@@ -12,7 +11,7 @@ import { DomainsFormModel } from './domains-form.model';
 
 @Component({
   selector: 'app-domains-page',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   template: `
     <div class="flex flex-auto flex-col gap-7 px-7 py-7">
       <div class="text-xl font-medium">Domains</div>
@@ -27,24 +26,18 @@ import { DomainsFormModel } from './domains-form.model';
             "
             [formControl]="domainName"
           />
-          <ng-container
-            *ngIf="
-              domainName.invalid && (domainName.dirty || domainName.touched)
-            "
-          >
-            <caption
-              *ngIf="domainName.errors?.['required']"
-              class="ly-form-field__error"
-            >
-              Domain name is required.
-            </caption>
-            <caption
-              *ngIf="domainName.errors?.['minlength']"
-              class="ly-form-field__error"
-            >
-              Domain name must be at least 3 characters long.
-            </caption>
-          </ng-container>
+          @if (domainName.invalid && (domainName.dirty || domainName.touched)) {
+            @if (domainName.errors?.['required']) {
+              <caption class="ly-form-field__error">
+                Domain name is required.
+              </caption>
+            }
+            @if (domainName.errors?.['minlength']) {
+              <caption class="ly-form-field__error">
+                Domain name must be at least 3 characters long.
+              </caption>
+            }
+          }
           <caption>
             Will be used as root domain name.
           </caption>
@@ -62,41 +55,37 @@ import { DomainsFormModel } from './domains-form.model';
             "
             [formControl]="subDomainName"
           />
-          <ng-container
-            *ngIf="
-              subDomainName.invalid &&
-              (subDomainName.dirty || subDomainName.touched)
-            "
-          >
-            <caption
-              *ngIf="subDomainName.errors?.['required']"
-              class="ly-form-field__error"
-            >
-              Sub domain name is required.
-            </caption>
-            <caption
-              *ngIf="subDomainName.errors?.['minlength']"
-              class="ly-form-field__error"
-            >
-              Sub domain name must be at least 3 characters long.
-            </caption>
-          </ng-container>
+          @if (
+            subDomainName.invalid &&
+            (subDomainName.dirty || subDomainName.touched)
+          ) {
+            @if (subDomainName.errors?.['required']) {
+              <caption class="ly-form-field__error">
+                Sub domain name is required.
+              </caption>
+            }
+            @if (subDomainName.errors?.['minlength']) {
+              <caption class="ly-form-field__error">
+                Sub domain name must be at least 3 characters long.
+              </caption>
+            }
+          }
           <caption>
             Will be used as default subdomain name to construct something.
           </caption>
         </div>
       </div>
       <div class="flex gap-2 [&>*]:!min-w-[100px]">
-        <button class="ly-button" (click)="back.emit()">Back</button>
+        <button class="ly-button" (click)="navigateBack.emit()">Back</button>
         <button
           class="ly-button ly-button--primary"
-          (click)="next.emit()"
+          (click)="navigateNext.emit()"
           [attr.aria-disabled]="form.status === 'VALID' ? undefined : true"
           [attr.disabled]="form.status === 'VALID' ? undefined : true"
         >
           Next
         </button>
-        <button class="ly-button ml-auto" (click)="cancel.emit()">
+        <button class="ly-button ml-auto" (click)="canceled.emit()">
           Cancel
         </button>
       </div>
@@ -116,7 +105,7 @@ export class DomainsPageComponent {
     return this.form.controls.subDomainName;
   }
 
-  @Output() back = new EventEmitter<void>();
-  @Output() next = new EventEmitter<void>();
-  @Output() cancel = new EventEmitter<void>();
+  @Output() navigateBack = new EventEmitter<void>();
+  @Output() navigateNext = new EventEmitter<void>();
+  @Output() canceled = new EventEmitter<void>();
 }

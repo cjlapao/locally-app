@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
@@ -8,7 +7,7 @@ export interface LocationLocallyForm {
 
 @Component({
   selector: 'app-locally-form',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   template: `
     <div class="ly-form-field">
       <label for="new-context-wizard-location-local-path-field"
@@ -22,11 +21,13 @@ export interface LocationLocallyForm {
         "
         [formControl]="path"
       />
-      <ng-container *ngIf="path.invalid && (path.dirty || path.touched)">
-        <caption *ngIf="path.errors?.['required']" class="ly-form-field__error">
-          Path is required.
-        </caption>
-      </ng-container>
+      @if (path.invalid && (path.dirty || path.touched)) {
+        @if (path.errors?.['required']) {
+          <caption class="ly-form-field__error">
+            Path is required.
+          </caption>
+        }
+      }
       <caption>
         Folder to store environment configuration files.
       </caption>

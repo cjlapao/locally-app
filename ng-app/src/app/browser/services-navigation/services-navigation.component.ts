@@ -1,11 +1,10 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { ContextStateService } from '../context-navigation/context-state.service';
 
 @Component({
   selector: 'app-services-navigation',
-  imports: [CommonModule],
+  imports: [],
   template: `
     <div
       class="flex min-w-[250px] flex-col gap-5 overflow-auto border-r border-gray-200 p-6"
@@ -76,7 +75,7 @@ import { ContextStateService } from '../context-navigation/context-state.service
   ]
 })
 export class ServicesNavigationComponent {
-  activeContext = this.contextStateService.activeContext;
+  private contextStateService = inject(ContextStateService);
 
-  constructor(private contextStateService: ContextStateService) {}
+  activeContext = this.contextStateService.activeContext;
 }

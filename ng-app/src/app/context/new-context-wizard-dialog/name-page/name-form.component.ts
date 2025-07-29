@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 
@@ -6,7 +5,7 @@ import { NameFormModel } from './name-form.model';
 
 @Component({
   selector: 'app-name-form',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   template: `
     <div class="ly-form-field">
       <label for="new-context-wizard-name-field">Context name</label>
@@ -18,17 +17,18 @@ import { NameFormModel } from './name-form.model';
         "
         [formControl]="name"
       />
-      <ng-container *ngIf="name.invalid && (name.dirty || name.touched)">
-        <caption *ngIf="name.errors?.['required']" class="ly-form-field__error">
-          Name is required.
-        </caption>
-        <caption
-          *ngIf="name.errors?.['minlength']"
-          class="ly-form-field__error"
-        >
-          Name must be at least 3 characters long.
-        </caption>
-      </ng-container>
+      @if (name.invalid && (name.dirty || name.touched)) {
+        @if (name.errors?.['required']) {
+          <caption class="ly-form-field__error">
+            Name is required.
+          </caption>
+        }
+        @if (name.errors?.['minlength']) {
+          <caption class="ly-form-field__error">
+            Name must be at least 3 characters long.
+          </caption>
+        }
+      }
       <caption>
         Human readable name for the context will be displayed across the app and
         in CLI.

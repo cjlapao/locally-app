@@ -1,9 +1,8 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-services-navigation',
-  imports: [CommonModule],
+  imports: [],
   template: `
     <div
       class="mx-auto flex max-w-[1000px] grow flex-col gap-4 overflow-auto p-7"

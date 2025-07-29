@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   Component,
   EventEmitter,
@@ -9,16 +8,16 @@ import {
 
 @Component({
   selector: 'app-navigation-item',
-  imports: [CommonModule],
+  imports: [],
   template: `
     <div class="flex items-start gap-3">
-      <ng-container *ngIf="active">
+      @if (active) {
         <div
           class="mt-1 h-4 w-4 shrink-0 rounded-full border-4 border-locally-primary-background bg-locally-background"
         ></div>
         <div class="font-medium">{{ label }}</div>
-      </ng-container>
-      <ng-container *ngIf="passed">
+      }
+      @if (passed) {
         <div
           class="mt-1 h-4 w-4 shrink-0 rounded-full bg-locally-primary-background"
         ></div>
@@ -29,13 +28,13 @@ import {
           (keyup.enter)="navigate.emit()"
           >{{ label }}</a
         >
-      </ng-container>
-      <ng-container *ngIf="!active && !passed">
+      }
+      @if (!active && !passed) {
         <div
           class="mt-1 h-4 w-4 rounded-full border-2 border-locally-text-field-disabled-ouline bg-locally-background"
         ></div>
         <div class="text-locally-text-field-disabled-text">{{ label }}</div>
-      </ng-container>
+      }
     </div>
   `
 })

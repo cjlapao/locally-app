@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, HostBinding, Input } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 
@@ -6,7 +5,7 @@ import { AwsForm } from './aws-form.model';
 
 @Component({
   selector: 'app-aws-form',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   template: `
     <div class="ly-form-field">
       <label for="new-context-wizard-location-aws-access-key-id-field"
@@ -20,18 +19,13 @@ import { AwsForm } from './aws-form.model';
         "
         [formControl]="accessKeyId"
       />
-      <ng-container
-        *ngIf="
-          accessKeyId.invalid && (accessKeyId.dirty || accessKeyId.touched)
-        "
-      >
-        <caption
-          *ngIf="accessKeyId.errors?.['required']"
-          class="ly-form-field__error"
-        >
-          Access Key Id is required.
-        </caption>
-      </ng-container>
+      @if (accessKeyId.invalid && (accessKeyId.dirty || accessKeyId.touched)) {
+        @if (accessKeyId.errors?.['required']) {
+          <caption class="ly-form-field__error">
+            Access Key Id is required.
+          </caption>
+        }
+      }
       <caption>
         Amazon account Access Key Id string.
       </caption>
@@ -49,19 +43,16 @@ import { AwsForm } from './aws-form.model';
         "
         [formControl]="accessKeySecret"
       />
-      <ng-container
-        *ngIf="
-          accessKeySecret.invalid &&
-          (accessKeySecret.dirty || accessKeySecret.touched)
-        "
-      >
-        <caption
-          *ngIf="accessKeySecret.errors?.['required']"
-          class="ly-form-field__error"
-        >
-          Access Key Secret is required.
-        </caption>
-      </ng-container>
+      @if (
+        accessKeySecret.invalid &&
+        (accessKeySecret.dirty || accessKeySecret.touched)
+      ) {
+        @if (accessKeySecret.errors?.['required']) {
+          <caption class="ly-form-field__error">
+            Access Key Secret is required.
+          </caption>
+        }
+      }
       <caption>
         Amazon account Access Key Secret string.
       </caption>
@@ -76,14 +67,13 @@ import { AwsForm } from './aws-form.model';
         "
         [formControl]="region"
       />
-      <ng-container *ngIf="region.invalid && (region.dirty || region.touched)">
-        <caption
-          *ngIf="region.errors?.['required']"
-          class="ly-form-field__error"
-        >
-          Region is required.
-        </caption>
-      </ng-container>
+      @if (region.invalid && (region.dirty || region.touched)) {
+        @if (region.errors?.['required']) {
+          <caption class="ly-form-field__error">
+            Region is required.
+          </caption>
+        }
+      }
       <caption>
         Amazon
         <a class="ly-link ly-link--text" target="_blank" href="#"
@@ -103,16 +93,13 @@ import { AwsForm } from './aws-form.model';
         "
         [formControl]="bucketName"
       />
-      <ng-container
-        *ngIf="bucketName.invalid && (bucketName.dirty || bucketName.touched)"
-      >
-        <caption
-          *ngIf="bucketName.errors?.['required']"
-          class="ly-form-field__error"
-        >
-          Bucket name is required.
-        </caption>
-      </ng-container>
+      @if (bucketName.invalid && (bucketName.dirty || bucketName.touched)) {
+        @if (bucketName.errors?.['required']) {
+          <caption class="ly-form-field__error">
+            Bucket name is required.
+          </caption>
+        }
+      }
       <caption>
         S3 bucket name.
       </caption>

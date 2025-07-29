@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   Component,
   EventEmitter,
@@ -13,7 +12,7 @@ import { NameFormModel } from './name-form.model';
 
 @Component({
   selector: 'app-name-page',
-  imports: [CommonModule, NameFormComponent],
+  imports: [NameFormComponent],
   template: `
     <div class="flex flex-auto flex-col gap-7 px-7 py-7">
       <div class="text-xl font-medium">Name</div>
@@ -24,13 +23,13 @@ import { NameFormModel } from './name-form.model';
         <button class="ly-button" aria-disabled="true" disabled>Back</button>
         <button
           class="ly-button ly-button--primary"
-          (click)="next.emit()"
+          (click)="navigateNext.emit()"
           [attr.aria-disabled]="form.status === 'VALID' ? undefined : true"
           [attr.disabled]="form.status === 'VALID' ? undefined : true"
         >
           Next
         </button>
-        <button class="ly-button ml-auto" (click)="cancel.emit()">
+        <button class="ly-button ml-auto" (click)="canceled.emit()">
           Cancel
         </button>
       </div>
@@ -42,6 +41,6 @@ export class NamePageComponent {
 
   @Input() form!: FormGroup<NameFormModel>;
 
-  @Output() next = new EventEmitter<void>();
-  @Output() cancel = new EventEmitter<void>();
+  @Output() navigateNext = new EventEmitter<void>();
+  @Output() canceled = new EventEmitter<void>();
 }

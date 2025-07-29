@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, HostBinding, Input } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 
@@ -6,7 +5,7 @@ import { AzureForm } from './azure-form.model';
 
 @Component({
   selector: 'app-azure-form',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   template: `
     <div class="ly-form-field">
       <label for="new-context-wizard-location-azure-subscription-id-field"
@@ -21,19 +20,16 @@ import { AzureForm } from './azure-form.model';
         "
         [formControl]="subscriptionId"
       />
-      <ng-container
-        *ngIf="
-          subscriptionId.invalid &&
-          (subscriptionId.dirty || subscriptionId.touched)
-        "
-      >
-        <caption
-          *ngIf="subscriptionId.errors?.['required']"
-          class="ly-form-field__error"
-        >
-          Subscription Id is required.
-        </caption>
-      </ng-container>
+      @if (
+        subscriptionId.invalid &&
+        (subscriptionId.dirty || subscriptionId.touched)
+      ) {
+        @if (subscriptionId.errors?.['required']) {
+          <caption class="ly-form-field__error">
+            Subscription Id is required.
+          </caption>
+        }
+      }
     </div>
     <div class="ly-form-field">
       <label for="new-context-wizard-location-azure-tenant-id-field"
@@ -47,16 +43,13 @@ import { AzureForm } from './azure-form.model';
         "
         [formControl]="tenantId"
       />
-      <ng-container
-        *ngIf="tenantId.invalid && (tenantId.dirty || tenantId.touched)"
-      >
-        <caption
-          *ngIf="tenantId.errors?.['required']"
-          class="ly-form-field__error"
-        >
-          Tenant Id is required.
-        </caption>
-      </ng-container>
+      @if (tenantId.invalid && (tenantId.dirty || tenantId.touched)) {
+        @if (tenantId.errors?.['required']) {
+          <caption class="ly-form-field__error">
+            Tenant Id is required.
+          </caption>
+        }
+      }
     </div>
     <div class="ly-form-field">
       <label for="new-context-wizard-location-azure-client-id-field"
@@ -70,16 +63,13 @@ import { AzureForm } from './azure-form.model';
         "
         [formControl]="clientId"
       />
-      <ng-container
-        *ngIf="clientId.invalid && (clientId.dirty || clientId.touched)"
-      >
-        <caption
-          *ngIf="clientId.errors?.['required']"
-          class="ly-form-field__error"
-        >
-          Client Id is required.
-        </caption>
-      </ng-container>
+      @if (clientId.invalid && (clientId.dirty || clientId.touched)) {
+        @if (clientId.errors?.['required']) {
+          <caption class="ly-form-field__error">
+            Client Id is required.
+          </caption>
+        }
+      }
     </div>
     <div class="ly-form-field">
       <label for="new-context-wizard-location-azure-client-secret-field"
@@ -93,18 +83,15 @@ import { AzureForm } from './azure-form.model';
         "
         [formControl]="clientSecret"
       />
-      <ng-container
-        *ngIf="
-          clientSecret.invalid && (clientSecret.dirty || clientSecret.touched)
-        "
-      >
-        <caption
-          *ngIf="clientSecret.errors?.['required']"
-          class="ly-form-field__error"
-        >
-          Client secret is required.
-        </caption>
-      </ng-container>
+      @if (
+        clientSecret.invalid && (clientSecret.dirty || clientSecret.touched)
+      ) {
+        @if (clientSecret.errors?.['required']) {
+          <caption class="ly-form-field__error">
+            Client secret is required.
+          </caption>
+        }
+      }
     </div>
     <div class="ly-form-field">
       <label for="new-context-wizard-location-azure-storage-account-name-field"
@@ -119,19 +106,16 @@ import { AzureForm } from './azure-form.model';
         "
         [formControl]="storageAccountName"
       />
-      <ng-container
-        *ngIf="
-          storageAccountName.invalid &&
-          (storageAccountName.dirty || storageAccountName.touched)
-        "
-      >
-        <caption
-          *ngIf="storageAccountName.errors?.['required']"
-          class="ly-form-field__error"
-        >
-          Storage account name secret is required.
-        </caption>
-      </ng-container>
+      @if (
+        storageAccountName.invalid &&
+        (storageAccountName.dirty || storageAccountName.touched)
+      ) {
+        @if (storageAccountName.errors?.['required']) {
+          <caption class="ly-form-field__error">
+            Storage account name secret is required.
+          </caption>
+        }
+      }
     </div>
     <div class="ly-form-field">
       <label
@@ -147,19 +131,16 @@ import { AzureForm } from './azure-form.model';
         "
         [formControl]="resourceGroupName"
       />
-      <ng-container
-        *ngIf="
-          resourceGroupName.invalid &&
-          (resourceGroupName.dirty || resourceGroupName.touched)
-        "
-      >
-        <caption
-          *ngIf="resourceGroupName.errors?.['required']"
-          class="ly-form-field__error"
-        >
-          Resource group name secret is required.
-        </caption>
-      </ng-container>
+      @if (
+        resourceGroupName.invalid &&
+        (resourceGroupName.dirty || resourceGroupName.touched)
+      ) {
+        @if (resourceGroupName.errors?.['required']) {
+          <caption class="ly-form-field__error">
+            Resource group name secret is required.
+          </caption>
+        }
+      }
     </div>
     <div class="ly-form-field">
       <label for="new-context-wizard-location-azure-container-name-field"
@@ -174,19 +155,15 @@ import { AzureForm } from './azure-form.model';
         "
         [formControl]="containerName"
       />
-      <ng-container
-        *ngIf="
-          containerName.invalid &&
-          (containerName.dirty || containerName.touched)
-        "
-      >
-        <caption
-          *ngIf="containerName.errors?.['required']"
-          class="ly-form-field__error"
-        >
-          Container name secret is required.
-        </caption>
-      </ng-container>
+      @if (
+        containerName.invalid && (containerName.dirty || containerName.touched)
+      ) {
+        @if (containerName.errors?.['required']) {
+          <caption class="ly-form-field__error">
+            Container name secret is required.
+          </caption>
+        }
+      }
     </div>
 
     <div class="ly-form-field">

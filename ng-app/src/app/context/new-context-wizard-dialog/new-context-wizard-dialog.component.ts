@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, ElementRef, HostBinding, ViewChild } from '@angular/core';
 import {
   FormBuilder,
@@ -24,7 +23,6 @@ import { ReviewPageComponent } from './review-page/review-page.component';
 @Component({
   selector: 'app-new-context-wizard-dialog',
   imports: [
-    CommonModule,
     DiscardChangesConfirmationDialogComponent,
     NamePageComponent,
     NavigationComponent,
@@ -69,33 +67,37 @@ import { ReviewPageComponent } from './review-page/review-page.component';
             ></app-navigation>
           </div>
           <div class="flex-auto overflow-auto">
-            <app-name-page
-              [form]="nameForm"
-              *ngIf="currentPage === newContextPage.NAME"
-              (next)="currentPage = newContextPage.LOCATION"
-              (cancel)="onCancel()"
-            ></app-name-page>
-            <app-location-page
-              *ngIf="currentPage === newContextPage.LOCATION"
-              [form]="locationForm"
-              (next)="currentPage = newContextPage.DOMAINS"
-              (back)="currentPage = newContextPage.NAME"
-              (cancel)="onCancel()"
-            ></app-location-page>
-            <app-domains-page
-              *ngIf="currentPage === newContextPage.DOMAINS"
-              [form]="domainsForm"
-              (next)="currentPage = newContextPage.REVIEW"
-              (back)="currentPage = newContextPage.LOCATION"
-              (cancel)="onCancel()"
-            ></app-domains-page>
-            <app-review-page
-              *ngIf="currentPage === newContextPage.REVIEW"
-              [form]="form"
-              (next)="onCreate()"
-              (back)="currentPage = newContextPage.DOMAINS"
-              (cancel)="onCancel()"
-            ></app-review-page>
+            @if (currentPage === newContextPage.NAME) {
+              <app-name-page
+                [form]="nameForm"
+                (navigateNext)="currentPage = newContextPage.LOCATION"
+                (canceled)="onCancel()"
+              ></app-name-page>
+            }
+            @if (currentPage === newContextPage.LOCATION) {
+              <app-location-page
+                [form]="locationForm"
+                (navigateNext)="currentPage = newContextPage.DOMAINS"
+                (navigateBack)="currentPage = newContextPage.NAME"
+                (canceled)="onCancel()"
+              ></app-location-page>
+            }
+            @if (currentPage === newContextPage.DOMAINS) {
+              <app-domains-page
+                [form]="domainsForm"
+                (navigateNext)="currentPage = newContextPage.REVIEW"
+                (navigateBack)="currentPage = newContextPage.LOCATION"
+                (canceled)="onCancel()"
+              ></app-domains-page>
+            }
+            @if (currentPage === newContextPage.REVIEW) {
+              <app-review-page
+                [form]="form"
+                (navigateNext)="onCreate()"
+                (navigateBack)="currentPage = newContextPage.DOMAINS"
+                (canceled)="onCancel()"
+              ></app-review-page>
+            }
           </div>
         </div>
       </div>

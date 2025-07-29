@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
@@ -6,7 +5,7 @@ import { LocallyForm } from './locally-form.model';
 
 @Component({
   selector: 'app-locally-form-review',
-  imports: [CommonModule],
+  imports: [],
   template: `
     <table class="ly-table w-full">
       <colgroup>
