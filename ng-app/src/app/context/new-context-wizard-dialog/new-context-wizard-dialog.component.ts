@@ -1,28 +1,28 @@
-import { Component, ElementRef, HostBinding, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, ElementRef, HostBinding, ViewChild } from '@angular/core';
 import {
-  FormGroup,
   FormBuilder,
   FormControl,
-  Validators,
+  FormGroup,
+  Validators
 } from '@angular/forms';
+
 import { DiscardChangesConfirmationDialogComponent } from '../../shared/discard-changes-confirmation-dialog/discard-changes-confirmation-dialog.component';
-import { NewContextWizardPage } from './new-context-wizard-page';
-import { NewContextFormModel } from './new-context-form.model';
-import { NavigationComponent } from './navigation/navigation.component';
-import { NameFormModel } from './name-page/name-form.model';
-import { NamePageComponent } from './name-page/name-page.component';
-import { LocationType } from './location-page/location-type';
-import { LocationFormModel } from './location-page/location-form.model';
-import { LocationPageComponent } from './location-page/location-page.component';
+import { ProcessingDialogComponent } from '../../shared/process-dialog/process-dialog.component';
 import { DomainsFormModel } from './domains-page/domains-form.model';
 import { DomainsPageComponent } from './domains-page/domains-page.component';
+import { LocationFormModel } from './location-page/location-form.model';
+import { LocationPageComponent } from './location-page/location-page.component';
+import { LocationType } from './location-page/location-type';
+import { NameFormModel } from './name-page/name-form.model';
+import { NamePageComponent } from './name-page/name-page.component';
+import { NavigationComponent } from './navigation/navigation.component';
+import { NewContextFormModel } from './new-context-form.model';
+import { NewContextWizardPage } from './new-context-wizard-page';
 import { ReviewPageComponent } from './review-page/review-page.component';
-import { ProcessingDialogComponent } from '../../shared/process-dialog/process-dialog.component';
 
 @Component({
   selector: 'app-new-context-wizard-dialog',
-  standalone: true,
   imports: [
     CommonModule,
     DiscardChangesConfirmationDialogComponent,
@@ -31,7 +31,7 @@ import { ProcessingDialogComponent } from '../../shared/process-dialog/process-d
     LocationPageComponent,
     DomainsPageComponent,
     ReviewPageComponent,
-    ProcessingDialogComponent,
+    ProcessingDialogComponent
   ],
   template: `
     <dialog
@@ -109,7 +109,7 @@ import { ProcessingDialogComponent } from '../../shared/process-dialog/process-d
       title="Creating new context"
       message="Please wait..."
     />
-  `,
+  `
 })
 export class NewContextWizardDialogComponent {
   @HostBinding('class') class = 'contents';
@@ -130,111 +130,111 @@ export class NewContextWizardDialogComponent {
     name: new FormGroup<NameFormModel>({
       name: new FormControl<string>('', {
         validators: [Validators.required, Validators.minLength(3)],
-        nonNullable: true,
-      }),
+        nonNullable: true
+      })
     }),
     location: new FormGroup<LocationFormModel>({
       type: new FormControl<string>(LocationType.LOCALLY, {
-        nonNullable: true,
+        nonNullable: true
       }),
       locally: new FormGroup({
         path: new FormControl<string>('', {
           validators: [Validators.required],
-          nonNullable: true,
-        }),
+          nonNullable: true
+        })
       }),
       aws: new FormGroup({
         accessKeyId: new FormControl<string>(
           { value: '', disabled: true },
           {
             validators: [Validators.required],
-            nonNullable: true,
-          },
+            nonNullable: true
+          }
         ),
         accessKeySecret: new FormControl<string>(
           { value: '', disabled: true },
           {
             validators: [Validators.required],
-            nonNullable: true,
-          },
+            nonNullable: true
+          }
         ),
         region: new FormControl<string>(
           { value: '', disabled: true },
           {
             validators: [Validators.required],
-            nonNullable: true,
-          },
+            nonNullable: true
+          }
         ),
         bucketName: new FormControl<string>(
           { value: '', disabled: true },
           {
             validators: [Validators.required],
-            nonNullable: true,
-          },
-        ),
+            nonNullable: true
+          }
+        )
       }),
       azure: new FormGroup({
         subscriptionId: new FormControl<string>(
           { value: '', disabled: true },
           {
             validators: [Validators.required],
-            nonNullable: true,
-          },
+            nonNullable: true
+          }
         ),
         tenantId: new FormControl<string>(
           { value: '', disabled: true },
           {
             validators: [Validators.required],
-            nonNullable: true,
-          },
+            nonNullable: true
+          }
         ),
         clientId: new FormControl<string>(
           { value: '', disabled: true },
           {
             validators: [Validators.required],
-            nonNullable: true,
-          },
+            nonNullable: true
+          }
         ),
         clientSecret: new FormControl<string>(
           { value: '', disabled: true },
           {
             validators: [Validators.required],
-            nonNullable: true,
-          },
+            nonNullable: true
+          }
         ),
         storageAccountName: new FormControl<string>(
           { value: '', disabled: true },
           {
             validators: [Validators.required],
-            nonNullable: true,
-          },
+            nonNullable: true
+          }
         ),
         resourceGroupName: new FormControl<string>(
           { value: '', disabled: true },
           {
             validators: [Validators.required],
-            nonNullable: true,
-          },
+            nonNullable: true
+          }
         ),
         containerName: new FormControl<string>(
           { value: '', disabled: true },
           {
             validators: [Validators.required],
-            nonNullable: true,
-          },
-        ),
-      }),
+            nonNullable: true
+          }
+        )
+      })
     }),
     domains: new FormGroup<DomainsFormModel>({
       domainName: new FormControl<string>('', {
         validators: [Validators.required],
-        nonNullable: true,
+        nonNullable: true
       }),
       subDomainName: new FormControl<string>('', {
         validators: [Validators.required],
-        nonNullable: true,
-      }),
-    }),
+        nonNullable: true
+      })
+    })
   });
 
   get nameForm() {
@@ -283,7 +283,7 @@ export class NewContextWizardDialogComponent {
             this.locationFormAzure.enable();
             break;
         }
-      },
+      }
     );
   }
 

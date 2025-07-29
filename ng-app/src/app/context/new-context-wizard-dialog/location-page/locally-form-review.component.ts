@@ -1,11 +1,11 @@
-import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+
 import { LocallyForm } from './locally-form.model';
 
 @Component({
   selector: 'app-locally-form-review',
-  standalone: true,
   imports: [CommonModule],
   template: `
     <table class="ly-table w-full">
@@ -23,7 +23,7 @@ import { LocallyForm } from './locally-form.model';
         </tr>
       </tbody>
     </table>
-  `,
+  `
 })
 export class LocallyFormReviewComponent {
   @Input() form!: FormGroup<LocallyForm>;

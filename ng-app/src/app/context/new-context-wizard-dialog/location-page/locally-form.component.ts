@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 export interface LocationLocallyForm {
@@ -8,7 +8,6 @@ export interface LocationLocallyForm {
 
 @Component({
   selector: 'app-locally-form',
-  standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   template: `
     <div class="ly-form-field">
@@ -32,7 +31,7 @@ export interface LocationLocallyForm {
         Folder to store environment configuration files.
       </caption>
     </div>
-  `,
+  `
 })
 export class LocallyFormComponent {
   @Input() form!: FormGroup<LocationLocallyForm>;

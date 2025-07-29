@@ -1,11 +1,11 @@
-import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+
 import { AzureForm } from './azure-form.model';
 
 @Component({
   selector: 'app-azure-form-review',
-  standalone: true,
   imports: [CommonModule],
   template: `
     <table class="ly-table w-full">
@@ -47,7 +47,7 @@ import { AzureForm } from './azure-form.model';
         </tr>
       </tbody>
     </table>
-  `,
+  `
 })
 export class AzureFormReviewComponent {
   @Input() form!: FormGroup<AzureForm>;

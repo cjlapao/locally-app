@@ -1,12 +1,11 @@
-import { Component, HostBinding, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, HostBinding, Input } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { AzureForm } from './azure-form.model';
 
+import { AzureForm } from './azure-form.model';
 
 @Component({
   selector: 'app-azure-form',
-  standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   template: `
     <div class="ly-form-field">
@@ -193,7 +192,7 @@ import { AzureForm } from './azure-form.model';
     <div class="ly-form-field">
       <button class="ly-button"><i class="ly-icon-play"></i>Test access</button>
     </div>
-  `,
+  `
 })
 export class AzureFormComponent {
   @HostBinding('class') class = 'contents';

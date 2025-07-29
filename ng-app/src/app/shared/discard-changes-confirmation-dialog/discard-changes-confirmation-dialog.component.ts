@@ -1,16 +1,15 @@
+import { CommonModule } from '@angular/common';
 import {
   Component,
   ElementRef,
   EventEmitter,
   HostBinding,
   Output,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-discard-changes-confirmation-dialog',
-  standalone: true,
   imports: [CommonModule],
   template: `
     <dialog
@@ -45,7 +44,7 @@ import { CommonModule } from '@angular/common';
         </div>
       </div>
     </dialog>
-  `,
+  `
 })
 export class DiscardChangesConfirmationDialogComponent {
   @HostBinding('class') class = 'contents';

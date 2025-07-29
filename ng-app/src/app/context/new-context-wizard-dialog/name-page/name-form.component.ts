@@ -1,11 +1,11 @@
-import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, Input } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+
 import { NameFormModel } from './name-form.model';
 
 @Component({
   selector: 'app-name-form',
-  standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   template: `
     <div class="ly-form-field">
@@ -34,7 +34,7 @@ import { NameFormModel } from './name-form.model';
         in CLI.
       </caption>
     </div>
-  `,
+  `
 })
 export class NameFormComponent {
   @Input() form!: FormGroup<NameFormModel>;

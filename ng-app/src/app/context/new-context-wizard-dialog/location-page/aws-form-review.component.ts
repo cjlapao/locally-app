@@ -1,11 +1,11 @@
-import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+
 import { AwsForm } from './aws-form.model';
 
 @Component({
   selector: 'app-aws-form-review',
-  standalone: true,
   imports: [CommonModule],
   template: `
     <table class="ly-table w-full">
@@ -35,7 +35,7 @@ import { AwsForm } from './aws-form.model';
         </tr>
       </tbody>
     </table>
-  `,
+  `
 })
 export class AwsFormReviewComponent {
   @Input() form!: FormGroup<AwsForm>;

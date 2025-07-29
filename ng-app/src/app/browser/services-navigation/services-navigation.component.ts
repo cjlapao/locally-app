@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+
 import { ContextStateService } from '../context-navigation/context-state.service';
 
 @Component({
   selector: 'app-services-navigation',
-  standalone: true,
   imports: [CommonModule],
   template: `
     <div
@@ -72,8 +72,8 @@ import { ContextStateService } from '../context-navigation/context-state.service
       :host {
         display: contents;
       }
-    `,
-  ],
+    `
+  ]
 })
 export class ServicesNavigationComponent {
   activeContext = this.contextStateService.activeContext;

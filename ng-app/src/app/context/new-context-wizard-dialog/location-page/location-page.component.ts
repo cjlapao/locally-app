@@ -1,21 +1,21 @@
+import { CommonModule } from '@angular/common';
 import {
   Component,
   EventEmitter,
   HostBinding,
   Input,
-  Output,
+  Output
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { LocallyFormComponent } from './locally-form.component';
+
 import { AwsFormComponent } from './aws-form.component';
 import { AzureFormComponent } from './azure-form.component';
+import { LocallyFormComponent } from './locally-form.component';
 import { LocationFormModel } from './location-form.model';
 import { LocationType } from './location-type';
 
 @Component({
   selector: 'app-location-page',
-  standalone: true,
   template: `
     <div class="flex flex-auto flex-col gap-7 px-7 py-7">
       <div class="text-xl font-medium">Location</div>
@@ -77,7 +77,9 @@ import { LocationType } from './location-type';
         >
           Next
         </button>
-        <button class="ly-button ml-auto" (click)="cancel.emit()">Cancel</button>
+        <button class="ly-button ml-auto" (click)="cancel.emit()">
+          Cancel
+        </button>
       </div>
     </div>
   `,
@@ -86,8 +88,8 @@ import { LocationType } from './location-type';
     ReactiveFormsModule,
     LocallyFormComponent,
     AwsFormComponent,
-    AzureFormComponent,
-  ],
+    AzureFormComponent
+  ]
 })
 export class LocationPageComponent {
   @HostBinding('class') class = 'flex flex-col h-full';

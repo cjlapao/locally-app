@@ -1,12 +1,12 @@
-import { Component, HostBinding } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, HostBinding } from '@angular/core';
 import { RouterModule } from '@angular/router';
+
 import { NewContextWizardDialogComponent } from '../../context/new-context-wizard-dialog/new-context-wizard-dialog.component';
 import { ContextStateService } from './context-state.service';
 
 @Component({
   selector: 'app-contexts-navigation',
-  standalone: true,
   imports: [CommonModule, RouterModule, NewContextWizardDialogComponent],
   template: `
     <div
@@ -42,7 +42,7 @@ import { ContextStateService } from './context-state.service';
     </div>
     <app-new-context-wizard-dialog #newContextWizardDlg>
     </app-new-context-wizard-dialog>
-  `,
+  `
 })
 export class ContextsNavigationComponent {
   @HostBinding('class') class = 'contents';

@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   Component,
   EventEmitter,
@@ -5,15 +6,14 @@ import {
   Input,
   OnChanges,
   Output,
-  SimpleChanges,
+  SimpleChanges
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { NavigationItemComponent } from './navigation-item.component';
+
 import { NewContextWizardPage } from '../new-context-wizard-page';
+import { NavigationItemComponent } from './navigation-item.component';
 
 @Component({
   selector: 'app-navigation',
-  standalone: true,
   imports: [CommonModule, NavigationItemComponent],
   template: `
     <div class="px-7 py-7">
@@ -49,7 +49,7 @@ import { NewContextWizardPage } from '../new-context-wizard-page';
         </div>
       </div>
     </div>
-  `,
+  `
 })
 export class NavigationComponent implements OnChanges {
   @HostBinding('class') class = 'flex flex-col h-full';

@@ -1,14 +1,13 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-welcome-page',
-  standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="flex flex-col h-[100vh] bg-locally-background overflow-auto">
+    <div class="flex h-[100vh] flex-col overflow-auto bg-locally-background">
       <div
-        class="grow pl-[20%] py-[35px] justify-end bg-locally-header-background flex flex-col gap-7"
+        class="flex grow flex-col justify-end gap-7 bg-locally-header-background py-[35px] pl-[20%]"
       >
         <div class="flex flex-col gap-4">
           <img
@@ -19,7 +18,7 @@ import { CommonModule } from '@angular/common';
           />
           <div class="text-gray-500">Local development simplified</div>
         </div>
-        <div class="flex flex-col gap-3 items-start">
+        <div class="flex flex-col items-start gap-3">
           <a
             class="ly-link text-sm"
             target="_blank"
@@ -30,8 +29,8 @@ import { CommonModule } from '@angular/common';
           <div class="text-sm">0.0.1-main</div>
         </div>
       </div>
-      <div class="grow-[0.55] pl-[20%] py-[35px] justify-start">
-        <div class="flex flex-col gap-4 items-start">
+      <div class="grow-[0.55] justify-start py-[35px] pl-[20%]">
+        <div class="flex flex-col items-start gap-4">
           <button class="ly-button ly-button--primary">
             <i class="ly-icon-create"></i>Create a new Context
           </button>
@@ -47,7 +46,7 @@ import { CommonModule } from '@angular/common';
       :host {
         display: contents;
       }
-    `,
-  ],
+    `
+  ]
 })
 export class WelcomeComponent {}

@@ -1,17 +1,17 @@
+import { CommonModule } from '@angular/common';
 import {
   Component,
   EventEmitter,
   HostBinding,
   Input,
-  Output,
+  Output
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+
 import { DomainsFormModel } from './domains-form.model';
 
 @Component({
   selector: 'app-domains-page',
-  standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   template: `
     <div class="flex flex-auto flex-col gap-7 px-7 py-7">
@@ -101,7 +101,7 @@ import { DomainsFormModel } from './domains-form.model';
         </button>
       </div>
     </div>
-  `,
+  `
 })
 export class DomainsPageComponent {
   @HostBinding('class') class = 'flex flex-col h-full';

@@ -1,12 +1,11 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-header',
-  standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="flex flex-row p-5 bg-locally-header-background">
+    <div class="flex flex-row bg-locally-header-background p-5">
       <img
         alt="Locally"
         src="assets/locally-logo.svg"
@@ -20,7 +19,7 @@ import { CommonModule } from '@angular/common';
       :host {
         display: contents;
       }
-    `,
-  ],
+    `
+  ]
 })
 export class HeaderComponent {}

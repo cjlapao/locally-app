@@ -1,13 +1,12 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-services-navigation',
-  standalone: true,
   imports: [CommonModule],
   template: `
     <div
-      class="flex flex-col p-7 max-w-[1000px] gap-4 grow mx-auto overflow-auto"
+      class="mx-auto flex max-w-[1000px] grow flex-col gap-4 overflow-auto p-7"
     >
       <div class="text-2xl font-medium">Lanes</div>
       <div class="flex flex-row gap-2">
@@ -30,7 +29,7 @@ import { CommonModule } from '@angular/common';
             <tr>
               <td>
                 <a class="ly-link"
-                  ><i class="ly-icon-document mr-1.5 relative top-[.15em]"></i
+                  ><i class="ly-icon-document relative top-[.15em] mr-1.5"></i
                   >My Component 1</a
                 >
               </td>
@@ -50,7 +49,7 @@ import { CommonModule } from '@angular/common';
             <tr>
               <td>
                 <a class="ly-link"
-                  ><i class="ly-icon-document mr-1.5 relative top-[.15em]"></i
+                  ><i class="ly-icon-document relative top-[.15em] mr-1.5"></i
                   >PHP My Admin</a
                 >
               </td>
@@ -70,7 +69,7 @@ import { CommonModule } from '@angular/common';
             <tr>
               <td>
                 <a class="ly-link"
-                  ><i class="ly-icon-document mr-1.5 relative top-[.15em]"></i
+                  ><i class="ly-icon-document relative top-[.15em] mr-1.5"></i
                   >Test lane</a
                 >
               </td>
@@ -90,7 +89,7 @@ import { CommonModule } from '@angular/common';
             <tr>
               <td>
                 <a class="ly-link"
-                  ><i class="ly-icon-document mr-1.5 relative top-[.15em]"></i
+                  ><i class="ly-icon-document relative top-[.15em] mr-1.5"></i
                   >LAMP Stack</a
                 >
               </td>
@@ -115,7 +114,7 @@ import { CommonModule } from '@angular/common';
       :host {
         display: contents;
       }
-    `,
-  ],
+    `
+  ]
 })
 export class LanesComponent {}

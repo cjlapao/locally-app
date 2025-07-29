@@ -1,18 +1,18 @@
+import { CommonModule } from '@angular/common';
 import {
   Component,
   EventEmitter,
   HostBinding,
   Input,
-  Output,
+  Output
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormGroup } from '@angular/forms';
+
 import { NameFormComponent } from './name-form.component';
 import { NameFormModel } from './name-form.model';
 
 @Component({
   selector: 'app-name-page',
-  standalone: true,
   imports: [CommonModule, NameFormComponent],
   template: `
     <div class="flex flex-auto flex-col gap-7 px-7 py-7">
@@ -30,10 +30,12 @@ import { NameFormModel } from './name-form.model';
         >
           Next
         </button>
-        <button class="ly-button ml-auto" (click)="cancel.emit()">Cancel</button>
+        <button class="ly-button ml-auto" (click)="cancel.emit()">
+          Cancel
+        </button>
       </div>
     </div>
-  `,
+  `
 })
 export class NamePageComponent {
   @HostBinding('class') class = 'flex flex-col h-full';

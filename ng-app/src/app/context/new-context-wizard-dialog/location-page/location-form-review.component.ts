@@ -1,11 +1,11 @@
-import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+
 import { LocationFormModel } from './location-form.model';
 
 @Component({
   selector: 'app-location-form-review',
-  standalone: true,
   imports: [CommonModule],
   template: `
     <table class="ly-table w-full">
@@ -23,7 +23,7 @@ import { LocationFormModel } from './location-form.model';
         </tr>
       </tbody>
     </table>
-  `,
+  `
 })
 export class LocationFormReviewComponent {
   @Input() form!: FormGroup<LocationFormModel>;

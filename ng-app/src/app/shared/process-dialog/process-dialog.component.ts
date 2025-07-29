@@ -1,15 +1,14 @@
+import { CommonModule } from '@angular/common';
 import {
   Component,
   ElementRef,
   HostBinding,
   Input,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-processing-dialog',
-  standalone: true,
   imports: [CommonModule],
   template: `
     <dialog
@@ -29,7 +28,7 @@ import { CommonModule } from '@angular/common';
         </div>
       </div>
     </dialog>
-  `,
+  `
 })
 export class ProcessingDialogComponent {
   @HostBinding('class') class = 'contents';

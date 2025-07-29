@@ -1,11 +1,11 @@
-import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+
 import { DomainsFormModel } from './domains-form.model';
 
 @Component({
   selector: 'app-domains-form-review',
-  standalone: true,
   imports: [CommonModule],
   template: `
     <table class="ly-table w-full">
@@ -27,7 +27,7 @@ import { DomainsFormModel } from './domains-form.model';
         </tr>
       </tbody>
     </table>
-  `,
+  `
 })
 export class DomainsFormReviewComponent {
   @Input() form!: FormGroup<DomainsFormModel>;

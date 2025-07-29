@@ -1,11 +1,11 @@
-import { Component, HostBinding, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, HostBinding, Input } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+
 import { AwsForm } from './aws-form.model';
 
 @Component({
   selector: 'app-aws-form',
-  standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   template: `
     <div class="ly-form-field">
@@ -120,7 +120,7 @@ import { AwsForm } from './aws-form.model';
     <div class="ly-form-field">
       <button class="ly-button"><i class="ly-icon-play"></i>Test access</button>
     </div>
-  `,
+  `
 })
 export class AwsFormComponent {
   @HostBinding('class') class = 'contents';

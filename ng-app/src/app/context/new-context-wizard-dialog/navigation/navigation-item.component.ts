@@ -1,15 +1,14 @@
+import { CommonModule } from '@angular/common';
 import {
   Component,
   EventEmitter,
   HostBinding,
   Input,
-  Output,
+  Output
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-navigation-item',
-  standalone: true,
   imports: [CommonModule],
   template: `
     <div class="flex items-start gap-3">
@@ -38,7 +37,7 @@ import { CommonModule } from '@angular/common';
         <div class="text-locally-text-field-disabled-text">{{ label }}</div>
       </ng-container>
     </div>
-  `,
+  `
 })
 export class NavigationItemComponent {
   @HostBinding('class') class = 'contents';
