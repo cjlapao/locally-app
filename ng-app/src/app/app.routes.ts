@@ -1,13 +1,47 @@
-import { Routes } from '@angular/router';
-import { WelcomeComponent } from './welcome/welcome.component';
+import { inject } from '@angular/core';
+import {
+  CanActivateFn,
+  RedirectCommand,
+  Router,
+  Routes
+} from '@angular/router';
+
 import { BrowserComponent } from './browser/browser.component';
 import { LanesComponent } from './browser/lanes/lanes.component';
+import { ConnectionErrorPageComponent } from './containers/connection-error-page.component';
+import { LoginPageComponent } from './containers/login-page/login-page.component';
+import { ShellComponent } from './containers/shell.component';
+import { UserStateService } from './services/user-state.service';
+import { WelcomeComponent } from './welcome/welcome.component';
+
+export const authGuard: CanActivateFn = () => {
+  const router = inject(Router);
+  const userStateService = inject(UserStateService);
+  return userStateService.isAuthenticated() && !userStateService.isExpired()
+    ? true
+    : new RedirectCommand(router.parseUrl('/login'), {
+        skipLocationChange: true
+      });
+};
 
 export const routes: Routes = [
   {
     path: '',
-    component: BrowserComponent,
-    children: [{ path: '', component: LanesComponent }],
+    canActivate: [authGuard],
+    component: ShellComponent
   },
-  { path: 'welcome', component: WelcomeComponent },
+  {
+    path: 'login',
+    component: LoginPageComponent
+  }
+  // {
+  //   path: 'connection-error',
+  //   component: ConnectionErrorPageComponent
+  // },
+  // {
+  //   path: 'browser',
+  //   component: BrowserComponent,
+  //   children: [{ path: '', component: LanesComponent }]
+  // },
+  // { path: 'welcome', component: WelcomeComponent }
 ];
