@@ -1,5 +1,5 @@
 .ly-button {
-  @apply inline-flex flex-wrap items-center justify-center gap-[7px] rounded-lg px-[9px] py-[5px];
+  @apply inline-flex flex-wrap items-center justify-start gap-[7px] rounded-lg px-[9px] py-[5px];
   @apply min-h-[38px] min-w-[38px];
   @apply border-2 border-solid border-locally-primary-background bg-transparent;
   @apply text-base font-medium text-locally-primary-background;
