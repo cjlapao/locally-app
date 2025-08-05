@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { delay, Subscription } from 'rxjs';
 
 import { AuthService } from '../../services/api/auth.service';
+import { UserStateService } from '../../services/user-state.service';
 import { LoginFormComponent } from './login-form.component';
 
 @Component({
@@ -63,6 +64,7 @@ import { LoginFormComponent } from './login-form.component';
 })
 export class LoginPageComponent implements OnDestroy {
   private authService = inject(AuthService);
+  private userStateService = inject(UserStateService);
   private router = inject(Router);
 
   loading = signal(false);
@@ -76,10 +78,15 @@ export class LoginPageComponent implements OnDestroy {
     this.loadSubscription = this.authService
       .login(event.username, event.password)
       .subscribe({
-        next: () => {
+        next: (result) => {
           this.loading.set(false);
           this.loaded.set(true);
           this.loadError.set(false);
+          this.userStateService.setTokens(
+            result.token,
+            result.refreshToken,
+            result.expiresAt
+          );
           this.router.navigate(['/']);
         },
         error: (error) => {
