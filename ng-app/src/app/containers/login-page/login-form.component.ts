@@ -1,4 +1,4 @@
-import { Component, output } from '@angular/core';
+import { Component, effect, input, output } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -23,13 +23,18 @@ import { LoginFormModel } from './login-form.model';
           <input
             id="login-form-username-field"
             class="ly-form-control"
+            [attr.readonly]="processing() ? true : null"
             [class.ly-form-control--error]="
-              username.invalid && (username.dirty || username.touched)
+              usernameControl.invalid &&
+              (usernameControl.dirty || usernameControl.touched)
             "
-            [formControl]="username"
+            formControlName="username"
           />
-          @if (username.invalid && (username.dirty || username.touched)) {
-            @if (username.errors?.['required']) {
+          @if (
+            usernameControl.invalid &&
+            (usernameControl.dirty || usernameControl.touched)
+          ) {
+            @if (usernameControl.errors?.['required']) {
               <caption class="ly-form-field__error">
                 User name is required.
               </caption>
@@ -43,13 +48,18 @@ import { LoginFormModel } from './login-form.model';
             id="login-form-password-field"
             type="password"
             class="ly-form-control"
+            [attr.readonly]="processing() ? true : null"
             [class.ly-form-control--error]="
-              password.invalid && (password.dirty || password.touched)
+              passwordControl.invalid &&
+              (passwordControl.dirty || passwordControl.touched)
             "
-            [formControl]="password"
+            formControlName="password"
           />
-          @if (password.invalid && (password.dirty || password.touched)) {
-            @if (password.errors?.['required']) {
+          @if (
+            passwordControl.invalid &&
+            (passwordControl.dirty || passwordControl.touched)
+          ) {
+            @if (passwordControl.errors?.['required']) {
               <caption class="ly-form-field__error">
                 Password is required.
               </caption>
@@ -58,7 +68,14 @@ import { LoginFormModel } from './login-form.model';
         </div>
       </div>
 
-      <button class="ly-button ly-button--primary" type="submit">Login</button>
+      <button
+        class="ly-button ly-button--primary"
+        [attr.disabled]="processing() ? true : null"
+        [attr.aria-disabled]="processing() ? true : null"
+        type="submit"
+      >
+        Login
+      </button>
     </form>
   `,
   host: {
@@ -66,29 +83,34 @@ import { LoginFormModel } from './login-form.model';
   }
 })
 export class LoginFormComponent {
-  form = new FormGroup<LoginFormModel>({
-    username: new FormControl<string>('', Validators.required),
-    password: new FormControl<string>('', Validators.required)
+  processing = input<boolean>(false);
+
+  usernameControl = new FormControl<string | null>('', Validators.required);
+  passwordControl = new FormControl<string | null>('', Validators.required);
+
+  form = new FormGroup({
+    username: this.usernameControl,
+    password: this.passwordControl
   });
 
-  get username() {
-    return this.form.controls.username;
-  }
-
-  get password() {
-    return this.form.controls.password;
-  }
+  private processingEffect = effect(() => {
+    if (this.processing()) {
+      this.form.disable();
+    } else {
+      this.form.enable();
+    }
+  });
 
   formSubmitted() {
     if (this.form.valid) {
       this.submitted.emit({
-        username: this.username.value!,
-        password: this.password.value!
+        username: this.usernameControl.value || '',
+        password: this.passwordControl.value || ''
       });
     } else {
       this.form.markAllAsTouched();
     }
   }
 
-  submitted = output<{ username: string; password: string }>();
+  submitted = output<LoginFormModel>();
 }

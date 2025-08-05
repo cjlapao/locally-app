@@ -1,6 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { map, Observable, of } from 'rxjs';
+import { catchError, map, Observable } from 'rxjs';
+
+import { AuthorizationError } from '../../shared/errors/authorization-error';
+import { TechnicalError } from '../../shared/errors/technical-error';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -25,6 +28,15 @@ export class AuthService {
         }
       )
       .pipe(
+        catchError((error) => {
+          if (error instanceof HttpErrorResponse) {
+            if (error.status === 401) {
+              throw new AuthorizationError();
+            }
+          }
+
+          throw new TechnicalError();
+        }),
         map((response) => ({
           token: response.token,
           refreshToken: response.refresh_token,
