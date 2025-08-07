@@ -15,7 +15,8 @@ class HttpAction<T> {
 
   run(action: Observable<T>) {
     this.loading.set(true);
-    this.cancel();
+    this.loaded.set(false);
+    this.loadError.set(false);
     this.subscription = action
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
