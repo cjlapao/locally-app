@@ -1,9 +1,10 @@
-import { Component, inject, OnDestroy, signal } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
-import { delay, Subscription } from 'rxjs';
 
 import { AuthService } from '../../services/api/auth.service';
-import { UserStateService } from '../../services/user-state.service';
+import { AuthStateService } from '../../services/auth-state.service';
+import { httpAction } from '../../shared/http/http-action';
 import { LoginFormComponent } from './login-form.component';
 
 @Component({
@@ -37,14 +38,14 @@ import { LoginFormComponent } from './login-form.component';
     <div
       class="flex w-[80%] grow flex-col justify-start gap-8 pb-[100px] pt-[40px] sm:w-[60%]"
     >
-      @if (loaded() && loadError()) {
-        @if (loadError() === 'AuthorizationError') {
+      @if (loginAction.loaded() && loginAction.loadError()) {
+        @if (loginAction.loadError() === 'AuthorizationError') {
           <div class="ly-alert ly-alert--error">
             You are not authorized to access this resource.
           </div>
         }
 
-        @if (loadError() === 'TechnicalError') {
+        @if (loginAction.loadError() === 'TechnicalError') {
           <div class="ly-alert ly-alert--error">
             Unable to process request. Please try again later.
           </div>
@@ -53,7 +54,7 @@ import { LoginFormComponent } from './login-form.component';
 
       <app-login-form
         class="max-w-[300px]"
-        [processing]="loading()"
+        [processing]="loginAction.loading()"
         (submitted)="login($event)"
       />
     </div>
@@ -62,42 +63,27 @@ import { LoginFormComponent } from './login-form.component';
     class: 'flex h-full flex-col items-center sm:min-w-[400px]'
   }
 })
-export class LoginPageComponent implements OnDestroy {
+export class LoginPageComponent {
   private authService = inject(AuthService);
-  private userStateService = inject(UserStateService);
+  private authStateService = inject(AuthStateService);
   private router = inject(Router);
+  private destroyRef = inject(DestroyRef);
 
-  loading = signal(false);
-  loaded = signal(false);
-  loadError = signal<boolean | string>(false);
-  loadSubscription!: Subscription;
+  loginAction = httpAction<{ token: string }>({
+    success: (result) => {
+      this.authStateService.jwtToken.set(result.token);
+      this.router.navigate(['/']);
+    },
+    error: () => {
+      this.authStateService.jwtToken.set(null);
+    }
+  });
 
   login(event: { username: string; password: string }) {
-    this.loading.set(true);
-    this.loadSubscription?.unsubscribe();
-    this.loadSubscription = this.authService
-      .login(event.username, event.password)
-      .subscribe({
-        next: (result) => {
-          this.loading.set(false);
-          this.loaded.set(true);
-          this.loadError.set(false);
-          this.userStateService.setTokens(
-            result.token,
-            result.refreshToken,
-            result.expiresAt
-          );
-          this.router.navigate(['/']);
-        },
-        error: (error) => {
-          this.loading.set(false);
-          this.loaded.set(true);
-          this.loadError.set(error.message);
-        }
-      });
-  }
-
-  ngOnDestroy() {
-    this.loadSubscription?.unsubscribe();
+    this.loginAction.run(
+      this.authService
+        .login(event.username, event.password)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+    );
   }
 }

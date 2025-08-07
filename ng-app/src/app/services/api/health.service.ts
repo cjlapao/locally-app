@@ -6,10 +6,8 @@ import { catchError, map, Observable, of } from 'rxjs';
 export class HealthService {
   private http = inject(HttpClient);
 
-  private apiUrl = 'https://localhost:8080/api/v1/health';
-
   isHealthy(): Observable<boolean> {
-    return this.http.get<string>(this.apiUrl).pipe(
+    return this.http.get<string>('https://localhost:8080/api/v1/health').pipe(
       catchError(() => of(false)),
       map((response) => response === 'OK')
     );
