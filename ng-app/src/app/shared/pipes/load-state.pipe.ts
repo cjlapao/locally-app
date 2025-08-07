@@ -5,11 +5,10 @@ import { delayLoad } from '../rxjs/delay-load';
 import { LoadState, loadState } from '../rxjs/load-state';
 
 @Pipe({
-  name: 'loadState',
-  pure: true
+  name: 'loadState'
 })
-export class LoadStatePipe<T> implements PipeTransform {
-  transform($source: Observable<T>, delay = 200): Observable<LoadState<T>> {
+export class LoadStatePipe implements PipeTransform {
+  transform<T>($source: Observable<T>, delay = 200): Observable<LoadState<T>> {
     return $source.pipe(loadState(), delayLoad(delay));
   }
 }
