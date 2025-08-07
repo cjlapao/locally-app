@@ -1,9 +1,10 @@
-import { signal } from '@angular/core';
+import { DestroyRef, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Observable, Subscription } from 'rxjs';
 
-import { LoadState, loadState } from '../rxjs/load-state';
-
 class HttpAction<T> {
+  private destroyRef = inject(DestroyRef);
+
   success!: (result: T) => void;
   error!: (error: any) => void;
 
@@ -14,28 +15,30 @@ class HttpAction<T> {
 
   run(action: Observable<T>) {
     this.loading.set(true);
-    this.subscription?.unsubscribe();
-    this.subscription = action.subscribe({
-      next: (result: T) => {
-        this.loading.set(false);
-        this.loaded.set(true);
-        this.loadError.set(false);
-        if (this.success) {
-          this.success(result);
+    this.cancel();
+    this.subscription = action
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (result: T) => {
+          this.loading.set(false);
+          this.loaded.set(true);
+          this.loadError.set(false);
+          if (this.success) {
+            this.success(result);
+          }
+        },
+        error: (error) => {
+          this.loading.set(false);
+          this.loaded.set(true);
+          this.loadError.set(error.message);
+          if (this.error) {
+            this.error(error);
+          }
         }
-      },
-      error: (error) => {
-        this.loading.set(false);
-        this.loaded.set(true);
-        this.loadError.set(error.message);
-        if (this.error) {
-          this.error(error);
-        }
-      }
-    });
+      });
   }
 
-  destroy() {
+  cancel() {
     this.subscription?.unsubscribe();
   }
 }

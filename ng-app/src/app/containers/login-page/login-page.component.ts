@@ -1,5 +1,4 @@
-import { Component, DestroyRef, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../../services/api/auth.service';
@@ -67,7 +66,6 @@ export class LoginPageComponent {
   private authService = inject(AuthService);
   private authStateService = inject(AuthStateService);
   private router = inject(Router);
-  private destroyRef = inject(DestroyRef);
 
   loginAction = httpAction<{ token: string }>({
     success: (result) => {
@@ -81,9 +79,7 @@ export class LoginPageComponent {
 
   login(event: { username: string; password: string }) {
     this.loginAction.run(
-      this.authService
-        .login(event.username, event.password)
-        .pipe(takeUntilDestroyed(this.destroyRef))
+      this.authService.login(event.username, event.password)
     );
   }
 }
