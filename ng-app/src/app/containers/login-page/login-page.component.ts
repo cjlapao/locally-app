@@ -3,24 +3,20 @@ import { Router } from '@angular/router';
 
 import { AuthService } from '../../services/api/auth.service';
 import { AuthStateService } from '../../services/auth-state.service';
+import { LogoComponent } from '../../shared/components/logo.component';
 import { httpAction } from '../../shared/http/http-action';
 import { LoginFormComponent } from './login-form.component';
 
 @Component({
   selector: 'app-login-page',
-  imports: [LoginFormComponent],
+  imports: [LogoComponent, LoginFormComponent],
   template: `
     <div
       class="flex w-full grow flex-col items-center justify-end bg-locally-header-background"
     >
       <div class="flex w-[80%] flex-col gap-7 pb-[40px] pt-[100px] sm:w-[60%]">
         <div class="flex flex-col gap-4">
-          <img
-            alt="Locally"
-            src="assets/locally-logo.svg"
-            width="200"
-            height="34"
-          />
+          <app-logo class="w-[250px]" />
           <div class="text-gray-500">Local development simplified</div>
         </div>
         <div class="flex flex-col items-start gap-3">

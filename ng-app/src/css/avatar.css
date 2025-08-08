@@ -1,0 +1,7 @@
+.ly-avatar {
+  @apply box-border inline-flex select-none items-center justify-center overflow-hidden rounded-full font-semibold;
+}
+
+.ly-avatar__initials {
+  @apply uppercase leading-none tracking-wide;
+}
