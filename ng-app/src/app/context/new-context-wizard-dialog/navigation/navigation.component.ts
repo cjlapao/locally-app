@@ -18,7 +18,7 @@ import { NavigationItemComponent } from './navigation-item.component';
     <div class="px-7 py-7">
       <div class="relative">
         <div
-          class="absolute bottom-2 left-[7px] top-2 border-l-2 border-locally-text-field-disabled-ouline"
+          class="border-locally-text-field-disabled-outline absolute bottom-2 left-[7px] top-2 border-l-2"
         ></div>
         <div class="relative flex flex-col gap-5">
           <app-navigation-item

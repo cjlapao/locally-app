@@ -42,4 +42,8 @@ export class AuthStateService {
 
     return thisToken !== null && !isExpired;
   });
+
+  logout() {
+    this.jwtToken.set(null);
+  }
 }

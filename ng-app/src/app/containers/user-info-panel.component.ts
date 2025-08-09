@@ -1,4 +1,4 @@
-import { AsyncPipe, JsonPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 
 import { UserService } from '../services/api/user.service';

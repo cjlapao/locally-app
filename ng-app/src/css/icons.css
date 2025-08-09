@@ -1,3 +1,7 @@
+.ly-icon {
+  @apply h-[16px] w-[16px];
+}
+
 .ly-icon-create {
   @apply i-locally-create;
 }

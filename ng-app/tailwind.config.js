@@ -34,7 +34,7 @@ module.exports = {
           'focus-outline': colors.sky['300'],
           'error-focus-outline': colors.red['300'],
           'hover-background': colors.sky['100'],
-          'selected-background': colors.red['200'],
+          'selected-background': colors.sky['200'],
           'primary-text': colors.white,
           'primary-background': colors.sky['700'],
           'primary-hover-background': colors.sky['800'],
@@ -50,7 +50,8 @@ module.exports = {
           'status-important-background': colors.red['100'],
           'text-field-outline': colors.slate['400'],
           'text-field-disabled-text': colors.slate['400'],
-          'text-field-disabled-ouline': colors.slate['300']
+          'text-field-disabled-outline': colors.slate['300'],
+          border: colors.slate['300']
         }
       }
     }

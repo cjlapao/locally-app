@@ -5,3 +5,7 @@
 .ly-avatar__initials {
   @apply uppercase leading-none tracking-wide;
 }
+
+.ly-avatar--square {
+  @apply rounded-md;
+}

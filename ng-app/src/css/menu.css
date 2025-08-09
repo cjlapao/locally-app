@@ -1,0 +1,23 @@
+.ly-menu {
+  @apply flex select-none flex-col gap-[8px];
+  @apply text-inherit;
+  @apply border-locally-border rounded-sm border bg-white;
+  @apply w-fit min-w-[220px] rounded-lg py-[8px] shadow-xl;
+}
+
+.ly-menu__item {
+  @apply inline-flex items-center justify-start gap-[8px] px-[16px] py-[5px];
+  @apply bg-transparent;
+  @apply text-base font-normal;
+  @apply hover:bg-locally-hover-background;
+  @apply active:bg-locally-selected-background;
+  @apply outline-none;
+  @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-sky-600/50;
+  @apply aria-disabled:border-slate-400 aria-disabled:bg-transparent aria-disabled:text-locally-caption-text aria-disabled:outline-none;
+  @apply transition-colors duration-200;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ly-menu__divider {
+  @apply border-locally-border overflow-hidden border-b;
+}

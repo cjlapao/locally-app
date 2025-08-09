@@ -11,8 +11,8 @@ import { LanesComponent } from './browser/lanes/lanes.component';
 import { ConnectionErrorPageComponent } from './containers/connection-error-page.component';
 import { LoginPageComponent } from './containers/login-page/login-page.component';
 import { ShellComponent } from './containers/shell.component';
+import { ProjectsComponent } from './projects/projects.component';
 import { AuthStateService } from './services/auth-state.service';
-import { WelcomeComponent } from './welcome/welcome.component';
 
 export const authGuard: CanActivateFn = () => {
   const router = inject(Router);
@@ -29,7 +29,13 @@ export const routes: Routes = [
   {
     path: '',
     canActivate: [authGuard],
-    component: ShellComponent
+    component: ShellComponent,
+    children: [
+      {
+        path: '',
+        component: ProjectsComponent
+      }
+    ]
   },
   {
     path: 'login',

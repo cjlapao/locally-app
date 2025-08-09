@@ -31,7 +31,7 @@ import {
       }
       @if (!active && !passed) {
         <div
-          class="mt-1 h-4 w-4 rounded-full border-2 border-locally-text-field-disabled-ouline bg-locally-background"
+          class="border-locally-text-field-disabled-oultine mt-1 h-4 w-4 rounded-full border-2 bg-locally-background"
         ></div>
         <div class="text-locally-text-field-disabled-text">{{ label }}</div>
       }

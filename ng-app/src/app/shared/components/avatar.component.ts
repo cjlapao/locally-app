@@ -13,6 +13,7 @@ import {
       [style.width.px]="size()"
       [style.height.px]="size()"
       [style.background]="bgColor()"
+      [class.ly-avatar--square]="shape() === 'square' ? true : undefined"
       [style.color]="fgColor()"
       [style.fontSize.px]="fontSize()"
       [attr.aria-label]="name() || 'Avatar'"
@@ -36,6 +37,7 @@ export class AvatarComponent {
   // signal inputs
   name = input<string>('');
   size = input<number>(40);
+  shape = input<string>('circle');
 
   // derived signals
   initials = computed(() => this.computeInitials(this.name() || ''));
@@ -71,10 +73,10 @@ export class AvatarComponent {
     let hash = 0;
     const s = str || 'avatar';
     for (let i = 0; i < s.length; i++) {
-      hash = ((hash << 5) - hash + s.charCodeAt(i)) | 0;
+      hash = ((hash << 3) - hash + s.charCodeAt(i)) | 0;
     }
     const hue = ((hash % 360) + 360) % 360;
-    const saturation = 65;
+    const saturation = 45;
     const lightness = 55;
 
     return this.hslToRgb(hue, saturation, lightness);
