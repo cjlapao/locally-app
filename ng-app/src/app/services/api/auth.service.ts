@@ -23,7 +23,7 @@ export class AuthService {
         { username, password },
         {
           headers: {
-            'X-Tenant-ID': 'global-tenant'
+            'X-Tenant-ID': '11111111-1111-1111-1111-111111111111'
           }
         }
       )

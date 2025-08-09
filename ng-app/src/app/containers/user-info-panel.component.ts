@@ -17,10 +17,15 @@ import { LoadStatePipe } from '../shared/pipes/load-state.pipe';
           <p>Error loading user information</p>
         } @else {
           @if (userInfoWithloadState.value; as userInfo) {
-            <div class="flex flex-row items-center gap-2">
-              <app-avatar [name]="userInfo.name" [size]="32"></app-avatar>
-              <div class="text-sm text-locally-caption-text">
-                {{ userInfo.name }}
+            <div class="flex flex-row items-center gap-[8px]">
+              <app-avatar [name]="userInfo.name" [size]="40"></app-avatar>
+              <div class="flex flex-col items-start gap-[0px]">
+                <div class="text-base text-locally-caption-text">
+                  {{ userInfo.name }}
+                </div>
+                <div class="text-sm text-locally-caption-text">
+                  {{ userInfo.roles.join(', ') }}
+                </div>
               </div>
             </div>
           }
