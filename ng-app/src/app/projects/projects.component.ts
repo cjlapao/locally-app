@@ -15,10 +15,10 @@ import { LoadStatePipe } from '../shared/pipes/load-state.pipe';
       <div
         class="flex w-full max-w-[800px] flex-col items-start gap-[32px] px-[50px] py-[100px]"
       >
-        <div class="flex flex-col gap-[14px]">
+        <div class="flex flex-col gap-[4px]">
           <div class="text-2xl font-medium">Projects</div>
           <div class="text-locally-caption-text">
-            Select existing project or create a new.
+            Select existing project or create a new one.
           </div>
         </div>
 
@@ -28,7 +28,9 @@ import { LoadStatePipe } from '../shared/pipes/load-state.pipe';
           }
 
           @if (projects.error) {
-            <p>Error loading projects</p>
+            <div class="ly-alert ly-alert--error">
+              Unable to load the projects list.
+            </div>
           } @else {
             <div class="flex flex-col gap-[16px]">
               <button
@@ -38,10 +40,10 @@ import { LoadStatePipe } from '../shared/pipes/load-state.pipe';
                 <i class="ly-icon i-locally-add"></i>Create New Project
               </button>
 
-              <div class="flex w-full flex-col gap-[16px]">
+              <div class="flex w-full flex-col">
                 @for (project of projects.value; track project.id) {
                   <div
-                    class="border-locally-border flex w-full flex-row items-start gap-[16px] border-t px-[16px] pt-[16px]"
+                    class="flex w-full cursor-pointer flex-row items-start gap-[16px] border-t border-locally-border px-[16px] py-[16px] hover:bg-locally-hover-background"
                   >
                     <app-avatar
                       [name]="project.name"
@@ -53,7 +55,9 @@ import { LoadStatePipe } from '../shared/pipes/load-state.pipe';
                       <div class="text-xl font-medium">
                         <a class="ly-link" href="#">{{ project.name }}</a>
                       </div>
-                      <div>{{ project.description }}</div>
+                      <div class="text-locally-caption-text">
+                        {{ project.description }}
+                      </div>
                     </div>
                   </div>
                 }
@@ -61,8 +65,6 @@ import { LoadStatePipe } from '../shared/pipes/load-state.pipe';
             </div>
           }
         }
-
-        <div></div>
       </div>
     </div>
   `,

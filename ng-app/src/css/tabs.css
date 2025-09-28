@@ -1,0 +1,26 @@
+.ly-tabs {
+  @apply relative flex w-full flex-wrap gap-2;
+  /* @apply border-b border-locally-border; */
+}
+
+.ly-tabs__item {
+  @apply relative inline-block;
+  @apply inline-flex items-center justify-center gap-1 rounded-lg px-[9px] py-[7px];
+  @apply min-w-fit;
+  @apply text-base font-medium leading-normal text-slate-600;
+  @apply hover:bg-locally-hover-background;
+  @apply active:bg-locally-selected-background;
+  @apply select-none outline-none;
+  @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-sky-600/50;
+  @apply aria-disabled:border-locally-primary-disabled-background aria-disabled:bg-transparent aria-disabled:text-locally-primary-disabled-background aria-disabled:outline-none;
+  @apply aria-pressed:cursor-default aria-pressed:bg-locally-selected-background;
+  @apply transition-colors duration-200;
+  @apply cursor-pointer;
+}
+
+.ly-tabs__item--selected {
+  @apply before:absolute before:bottom-0 before:left-[7px] before:right-[7px] before:block before:h-[2px] before:bg-sky-600 before:content-[''];
+  @apply hover:bg-transparent;
+  @apply cursor-default;
+  @apply pointer-events-none;
+}

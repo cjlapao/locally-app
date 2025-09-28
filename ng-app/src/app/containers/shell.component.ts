@@ -15,33 +15,48 @@ import { UserInfoPanelComponent } from './user-info-panel.component';
       <app-logo class="w-[150px]" />
 
       <button
-        id="zoom-menu-toggle"
+        id="user-menu-toggle"
         class="ly-button ly-button--text"
-        popovertarget="zoom-popover"
+        popoverTarget="user-menu-popover"
       >
         <app-user-info-panel /><i class="ly-icon i-locally-drop-down"></i>
       </button>
 
       <menu
-        id="zoom-popover"
-        popover
+        id="user-menu-popover"
+        popover="manual"
         role="menu"
         class="ly-menu !hidden [&:popover-open]:!flex"
-        anchor="zoom-menu-toggle"
+        anchor="user-menu-toggle"
         style="position-area: bottom span-left"
       >
-        <div class="ly-menu__item" tabindex="0">
+        <button
+          class="ly-menu__item"
+          tabindex="0"
+          popovertarget="user-menu-popover"
+          popovertargetaction="hide"
+          (click)="goToSettings()"
+        >
           <i class="ly-icon i-locally-settings"></i>Settings
-        </div>
+        </button>
         <div class="ly-menu__divider"></div>
-        <div class="ly-menu__item" tabindex="0" (click)="logout()">
+        <button
+          class="ly-menu__item"
+          tabindex="0"
+          popovertarget="user-menu-popover"
+          popovertargetaction="hide"
+          (click)="logout()"
+        >
           <i class="ly-icon"></i>Logout
-        </div>
+        </button>
       </menu>
     </div>
 
     <router-outlet />
-  `
+  `,
+  host: {
+    class: 'flex w-full h-full flex-col'
+  }
 })
 export class ShellComponent {
   authStateService = inject(AuthStateService);
@@ -50,5 +65,9 @@ export class ShellComponent {
   logout() {
     this.authStateService.logout();
     this.router.navigate(['/login']);
+  }
+
+  goToSettings() {
+    this.router.navigate(['/settings']);
   }
 }

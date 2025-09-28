@@ -6,10 +6,9 @@ import {
   Routes
 } from '@angular/router';
 
-import { BrowserComponent } from './browser/browser.component';
-import { LanesComponent } from './browser/lanes/lanes.component';
-import { ConnectionErrorPageComponent } from './containers/connection-error-page.component';
 import { LoginPageComponent } from './containers/login-page/login-page.component';
+import { SETTING_ROUTES } from './containers/settings/settings-routes';
+import { SettingsComponent } from './containers/settings/settings.component';
 import { ShellComponent } from './containers/shell.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { AuthStateService } from './services/auth-state.service';
@@ -34,6 +33,11 @@ export const routes: Routes = [
       {
         path: '',
         component: ProjectsComponent
+      },
+      {
+        path: 'settings',
+        component: SettingsComponent,
+        children: SETTING_ROUTES
       }
     ]
   },
